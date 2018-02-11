@@ -52,7 +52,8 @@ namespace ShoppingAPI.App_Start
             {
                 x.FromThisAssembly()
                     .SelectAllClasses()
-                    .BindDefaultInterface();
+                    .BindDefaultInterface()
+                    .Configure(y => y.InRequestScope());
             });
 
             return kernel;
