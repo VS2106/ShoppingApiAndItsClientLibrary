@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Data.Entity;
 using Microsoft.Owin;
 using Owin;
+using ShoppingAPI;
+using ShoppingAPI.Migrations;
+using ShoppingAPI.Persistence;
 
-[assembly: OwinStartup(typeof(ShoppingAPI.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
 namespace ShoppingAPI
 {
@@ -13,6 +15,25 @@ namespace ShoppingAPI
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            InitializeDatabase();
+        }
+
+        private void InitializeDatabase()
+        {
+            try
+            {
+                using (var context = new ShoppingApiDbContext())
+                {
+                    Database.SetInitializer(
+                        new MigrateDatabaseToLatestVersion<ShoppingApiDbContext, Configuration>());
+
+                    context.Database.Initialize(true);
+                }
+            }
+            catch (Exception)
+            {
+                //TODO later: do something here. 
+            }
         }
     }
 }

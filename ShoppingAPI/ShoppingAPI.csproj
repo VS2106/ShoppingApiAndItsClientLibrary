@@ -267,6 +267,10 @@
     <Compile Include="Persistence\Migrations\201802112001075_addDomainRelatedTables.Designer.cs">
       <DependentUpon>201802112001075_addDomainRelatedTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201802122034261_seedDBWithFakeData.cs" />
+    <Compile Include="Persistence\Migrations\201802122034261_seedDBWithFakeData.Designer.cs">
+      <DependentUpon>201802122034261_seedDBWithFakeData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Repositories\BaseRepository.cs" />
     <Compile Include="Persistence\Repositories\OrderItemRepository.cs" />
     <Compile Include="Persistence\Repositories\OrderRepository.cs" />
@@ -341,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201802112001075_addDomainRelatedTables.resx">
       <DependentUpon>201802112001075_addDomainRelatedTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201802122034261_seedDBWithFakeData.resx">
+      <DependentUpon>201802122034261_seedDBWithFakeData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
