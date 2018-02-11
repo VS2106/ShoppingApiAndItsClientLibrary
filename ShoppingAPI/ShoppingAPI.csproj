@@ -247,7 +247,11 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Core\Models\AccountBindingModels.cs" />
     <Compile Include="Core\Models\AccountViewModels.cs" />
+    <Compile Include="Core\Models\Base\BaseDomainModel.cs" />
     <Compile Include="Core\Models\IdentityModels.cs" />
+    <Compile Include="Core\Models\Order.cs" />
+    <Compile Include="Core\Models\OrderItem.cs" />
+    <Compile Include="Core\Models\Product.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
