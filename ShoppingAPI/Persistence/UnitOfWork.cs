@@ -1,6 +1,6 @@
-﻿using ShoppingAPI.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ShoppingAPI.Core;
 
 namespace ShoppingAPI.Persistence
 {
