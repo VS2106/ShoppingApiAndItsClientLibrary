@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using System.Reflection;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ShoppingAPI.Core.Models;
 
@@ -18,6 +19,12 @@ namespace ShoppingAPI.Persistence
         public static ShoppingApiDbContext Create()
         {
             return new ShoppingApiDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Configurations.AddFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }
