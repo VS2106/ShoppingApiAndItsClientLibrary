@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using ShoppingAPI.Core;
+using ShoppingAPI.Core.Models;
+using ShoppingAPI.Core.Repositories;
+using ShoppingAPI.Persistence.Repositories;
 
 namespace ShoppingAPI.Persistence
 {
@@ -8,6 +11,10 @@ namespace ShoppingAPI.Persistence
     {
         private readonly ShoppingApiDbContext _context;
         private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
+
+        public IProductRepository Products => GetOrCreateRepository<ProductRepository, Product>();
+        public IOrderItemRepository OrderItems => GetOrCreateRepository<OrderItemRepository, OrderItem>();
+        public IOrderRepository Orders => GetOrCreateRepository<OrderRepository, Order>();
 
         public UnitOfWork(ShoppingApiDbContext context)
         {
