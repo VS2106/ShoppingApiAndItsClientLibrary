@@ -1,10 +1,10 @@
-using ShoppingAPI.Core.Models;
+using ShoppingAPI.Persistence;
 
 namespace ShoppingAPI.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ShoppingApiDbContext>
     {
         public Configuration()
         {
@@ -12,7 +12,7 @@ namespace ShoppingAPI.Migrations
             MigrationsDirectory = @"Persistence\Migrations";
         }
 
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(ShoppingApiDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
