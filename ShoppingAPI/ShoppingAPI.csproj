@@ -260,6 +260,10 @@
     <Compile Include="Persistence\Maps\OrderItemMap.cs" />
     <Compile Include="Persistence\Maps\OrderMap.cs" />
     <Compile Include="Persistence\Maps\ProductMap.cs" />
+    <Compile Include="Persistence\Migrations\201802112001075_addDomainRelatedTables.cs" />
+    <Compile Include="Persistence\Migrations\201802112001075_addDomainRelatedTables.Designer.cs">
+      <DependentUpon>201802112001075_addDomainRelatedTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Repositories\BaseRepository.cs" />
     <Compile Include="Persistence\ShoppingApiDbContext.cs" />
     <Compile Include="Persistence\Migrations\201802111323197_AddIndividualAccountsRelatedTables.cs" />
@@ -328,6 +332,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Persistence\Migrations\201802111323197_AddIndividualAccountsRelatedTables.resx">
       <DependentUpon>201802111323197_AddIndividualAccountsRelatedTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201802112001075_addDomainRelatedTables.resx">
+      <DependentUpon>201802112001075_addDomainRelatedTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
