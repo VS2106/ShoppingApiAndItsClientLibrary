@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Owin;
 using ShoppingAPI;
 using ShoppingAPI.Migrations;
@@ -14,6 +15,7 @@ namespace ShoppingAPI
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseCors(CorsOptions.AllowAll);
             ConfigureAuth(app);
             InitializeDatabase();
         }
