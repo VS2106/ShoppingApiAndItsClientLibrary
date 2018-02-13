@@ -9,7 +9,7 @@ namespace ShoppingAPI.Persistence
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<ShoppingBasket> ShoppingBaskets { get; set; }
 
         public ShoppingApiDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

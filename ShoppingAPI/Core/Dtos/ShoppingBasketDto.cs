@@ -2,13 +2,13 @@
 
 namespace ShoppingAPI.Core.Dtos
 {
-    public class OrderDto
+    public class ShoppingBasketDto
     {
         [Required]
         public string IdentityUserId { get; set; }
         public OrderItemDto[] OrderItems { get; set; }
 
-        public OrderDto()
+        public ShoppingBasketDto()
         {
             OrderItems = new OrderItemDto[0];
         }

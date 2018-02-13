@@ -14,7 +14,7 @@ namespace ShoppingAPI.Persistence
 
         public IProductRepository Products => GetOrCreateRepository<ProductRepository, Product>();
         public IOrderItemRepository OrderItems => GetOrCreateRepository<OrderItemRepository, OrderItem>();
-        public IOrderRepository Orders => GetOrCreateRepository<OrderRepository, Order>();
+        public IShoppingBasketRepository ShoppingBaskets => GetOrCreateRepository<ShoppingBasketRepository, ShoppingBasket>();
 
         public UnitOfWork(ShoppingApiDbContext context)
         {

@@ -7,7 +7,7 @@ namespace ShoppingAPI.Core
     {
         IProductRepository Products { get; }
         IOrderItemRepository OrderItems { get; }
-        IOrderRepository Orders { get; }
+        IShoppingBasketRepository ShoppingBaskets { get; }
         int SaveChanges();
     }
 }

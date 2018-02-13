@@ -259,7 +259,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Core\Dtos\OrderDto.cs" />
+    <Compile Include="Core\Dtos\ShoppingBasketDto.cs" />
     <Compile Include="Core\Dtos\OrderItemDto.cs" />
     <Compile Include="Core\Dtos\ProductDto.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
@@ -267,18 +267,18 @@
     <Compile Include="Core\Models\AccountViewModels.cs" />
     <Compile Include="Core\Models\Base\BaseDomainModel.cs" />
     <Compile Include="Core\Models\IdentityModels.cs" />
-    <Compile Include="Core\Models\Order.cs" />
+    <Compile Include="Core\Models\ShoppingBasket.cs" />
     <Compile Include="Core\Models\OrderItem.cs" />
     <Compile Include="Core\Models\Product.cs" />
     <Compile Include="Core\Repositories\IBaseRepository.cs" />
     <Compile Include="Core\Repositories\IOrderItemRepository.cs" />
-    <Compile Include="Core\Repositories\IOrderRepository.cs" />
+    <Compile Include="Core\Repositories\IShoppingBasketRepository.cs" />
     <Compile Include="Core\Repositories\IProductRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Maps\OrderItemMap.cs" />
-    <Compile Include="Persistence\Maps\OrderMap.cs" />
+    <Compile Include="Persistence\Maps\ShoppingBasketMap.cs" />
     <Compile Include="Persistence\Maps\ProductMap.cs" />
     <Compile Include="Persistence\Migrations\201802112001075_addDomainRelatedTables.cs" />
     <Compile Include="Persistence\Migrations\201802112001075_addDomainRelatedTables.Designer.cs">
@@ -290,7 +290,7 @@
     </Compile>
     <Compile Include="Persistence\Repositories\BaseRepository.cs" />
     <Compile Include="Persistence\Repositories\OrderItemRepository.cs" />
-    <Compile Include="Persistence\Repositories\OrderRepository.cs" />
+    <Compile Include="Persistence\Repositories\ShoppingBasketRepository.cs" />
     <Compile Include="Persistence\Repositories\ProductRepositry.cs" />
     <Compile Include="Persistence\ShoppingApiDbContext.cs" />
     <Compile Include="Persistence\Migrations\201802111323197_AddIndividualAccountsRelatedTables.cs" />

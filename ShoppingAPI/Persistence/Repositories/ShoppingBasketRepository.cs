@@ -4,9 +4,9 @@ using ShoppingAPI.Core.Repositories;
 
 namespace ShoppingAPI.Persistence.Repositories
 {
-    sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
+    sealed class ShoppingBasketRepository : BaseRepository<ShoppingBasket>, IShoppingBasketRepository
     {
-        public OrderRepository(DbSet<Order> set)
+        public ShoppingBasketRepository(DbSet<ShoppingBasket> set)
             : base(set)
         {
         }

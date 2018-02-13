@@ -11,7 +11,7 @@ namespace ShoppingAPI.App_Start
             Mapper.Initialize((config) =>
             {
                 config.CreateMap<Product, ProductDto>().ReverseMap();
-                config.CreateMap<Order, OrderDto>().ReverseMap();
+                config.CreateMap<ShoppingBasket, ShoppingBasketDto>().ReverseMap();
                 config.CreateMap<OrderItem, OrderItemDto>().ReverseMap();
             });
         }

@@ -3,15 +3,15 @@ using ShoppingAPI.Core.Models;
 
 namespace ShoppingAPI.Persistence.Maps
 {
-    public class OrderMap : EntityTypeConfiguration<Order>
+    public class ShoppingBasketMap : EntityTypeConfiguration<ShoppingBasket>
     {
-        public OrderMap()
+        public ShoppingBasketMap()
         {
             HasKey(t => t.Id);
 
-            ToTable("tblOrder");
+            ToTable("tblShoppingBasket");
             Property(t => t.Id)
-                .HasColumnName("intOrderId");
+                .HasColumnName("intShoppingBasketId");
             Property(t => t.IdentityUserId)
                 .HasColumnName("strIdentityUserId")
                 .IsRequired();
