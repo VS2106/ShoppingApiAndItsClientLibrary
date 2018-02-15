@@ -17,7 +17,8 @@ namespace ShoppingAPI.Persistence.Maps
                 .IsRequired();
             Property(t => t.Quantity)
                 .HasColumnName("intQuantity")
-                .IsRequired();
+                .IsRequired()
+                .IsConcurrencyToken();
         }
     }
 }
