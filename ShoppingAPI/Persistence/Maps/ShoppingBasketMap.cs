@@ -7,18 +7,14 @@ namespace ShoppingAPI.Persistence.Maps
     {
         public ShoppingBasketMap()
         {
-            HasKey(t => t.Id);
+            HasKey(t => t.ApplicationUserId);
 
             ToTable("tblShoppingBasket");
-            Property(t => t.Id)
-                .HasColumnName("intShoppingBasketId");
-            Property(t => t.IdentityUserId)
-                .HasColumnName("strIdentityUserId")
-                .IsRequired();
+            Property(t => t.ApplicationUserId)
+                .HasColumnName("intApplicationUserId");
 
             HasMany(t => t.OrderItems)
-                .WithRequired()
-                .WillCascadeOnDelete(true);
+                .WithRequired();
         }
     }
 }

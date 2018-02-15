@@ -7,13 +7,13 @@ namespace ShoppingAPI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddIndividualAccountsRelatedTables : IMigrationMetadata
+    public sealed partial class AddDomainRelatedTables : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddIndividualAccountsRelatedTables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDomainRelatedTables));
         
         string IMigrationMetadata.Id
         {
-            get { return "201802111323197_AddIndividualAccountsRelatedTables"; }
+            get { return "201802151242576_AddDomainRelatedTables"; }
         }
         
         string IMigrationMetadata.Source

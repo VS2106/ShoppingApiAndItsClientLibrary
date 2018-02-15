@@ -7,13 +7,13 @@ namespace ShoppingAPI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class seedDBWithFakeData : IMigrationMetadata
+    public sealed partial class SeedDBWithFakeTestData : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(seedDBWithFakeData));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(SeedDBWithFakeTestData));
         
         string IMigrationMetadata.Id
         {
-            get { return "201802122034261_seedDBWithFakeData"; }
+            get { return "201802151401003_SeedDBWithFakeTestData"; }
         }
         
         string IMigrationMetadata.Source
