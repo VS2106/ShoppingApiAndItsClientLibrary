@@ -12,12 +12,12 @@ using ShoppingAPI.Core.Models;
 namespace ShoppingAPI.Controllers
 {
     [Authorize]
-    public class OrderItemController : ApiController
+    public class OrderItemsController : ApiController
     {
 
         private IUnitOfWork _unitOfWork;
 
-        public OrderItemController(IUnitOfWork unitOfWork)
+        public OrderItemsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -81,7 +81,7 @@ namespace ShoppingAPI.Controllers
                 try
                 {
                     _unitOfWork.SaveChanges();
-                    return Created(Url.GetLink<OrderItemController>(a => a.Get(orderItem.Id)),
+                    return Created(Url.GetLink<OrderItemsController>(a => a.Get(orderItem.Id)),
                        Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
                 }
                 catch (DbUpdateConcurrencyException ex)
@@ -120,7 +120,7 @@ namespace ShoppingAPI.Controllers
                 try
                 {
                     _unitOfWork.SaveChanges();
-                    return Created(Url.GetLink<OrderItemController>(a => a.Get(id)),
+                    return Created(Url.GetLink<OrderItemsController>(a => a.Get(id)),
                        Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
                 }
                 catch (DbUpdateConcurrencyException ex)
