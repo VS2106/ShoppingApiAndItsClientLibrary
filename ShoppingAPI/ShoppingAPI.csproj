@@ -289,13 +289,13 @@
     <Compile Include="Persistence\Maps\OrderItemMap.cs" />
     <Compile Include="Persistence\Maps\ShoppingBasketMap.cs" />
     <Compile Include="Persistence\Maps\ProductMap.cs" />
-    <Compile Include="Persistence\Migrations\201802151242576_AddDomainRelatedTables.cs" />
-    <Compile Include="Persistence\Migrations\201802151242576_AddDomainRelatedTables.Designer.cs">
-      <DependentUpon>201802151242576_AddDomainRelatedTables.cs</DependentUpon>
+    <Compile Include="Persistence\Migrations\201802162001002_AddDomainRelatedTables.cs" />
+    <Compile Include="Persistence\Migrations\201802162001002_AddDomainRelatedTables.Designer.cs">
+      <DependentUpon>201802162001002_AddDomainRelatedTables.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201802151401003_SeedDBWithFakeTestData.cs" />
-    <Compile Include="Persistence\Migrations\201802151401003_SeedDBWithFakeTestData.Designer.cs">
-      <DependentUpon>201802151401003_SeedDBWithFakeTestData.cs</DependentUpon>
+    <Compile Include="Persistence\Migrations\201802162006577_SeedDBWithFakeTestData.cs" />
+    <Compile Include="Persistence\Migrations\201802162006577_SeedDBWithFakeTestData.Designer.cs">
+      <DependentUpon>201802162006577_SeedDBWithFakeTestData.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Repositories\BaseRepository.cs" />
     <Compile Include="Persistence\Repositories\OrderItemRepository.cs" />
@@ -361,11 +361,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Persistence\Migrations\201802151242576_AddDomainRelatedTables.resx">
-      <DependentUpon>201802151242576_AddDomainRelatedTables.cs</DependentUpon>
+    <EmbeddedResource Include="Persistence\Migrations\201802162001002_AddDomainRelatedTables.resx">
+      <DependentUpon>201802162001002_AddDomainRelatedTables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201802151401003_SeedDBWithFakeTestData.resx">
-      <DependentUpon>201802151401003_SeedDBWithFakeTestData.cs</DependentUpon>
+    <EmbeddedResource Include="Persistence\Migrations\201802162006577_SeedDBWithFakeTestData.resx">
+      <DependentUpon>201802162006577_SeedDBWithFakeTestData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

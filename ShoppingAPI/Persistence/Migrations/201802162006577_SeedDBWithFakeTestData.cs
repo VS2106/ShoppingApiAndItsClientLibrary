@@ -15,8 +15,8 @@ namespace ShoppingAPI.Migrations
               @"INSERT INTO [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES (N'9bf37d84-8669-4130-bce2-f3c4bb7ed52c', N'test1@api.com', 0, N'ANza7RGbTJR/0qaE3KSJxAn972PkcR9c3h2vMtqNRbkQJHMuv4P5xeOLHgvCADVZYQ==', N'63f19c08-933c-4aae-acb5-098fed4763bd', NULL, 0, 0, NULL, 0, 0, N'test1@api.com')
 INSERT INTO [dbo].[AspNetUsers]([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES(N'f72fb25c-0674-4f2b-b6e7-4576b9a6aa16', N'test2@api.com', 0, N'AJwGUPhvZNZB6khZGSkvyxIGkQLbs5xknJnt467vpgY64RVKG5grfx8Jn2rZMxLXZQ==', N'ef41c7aa-ae5d-4f12-bac1-d02f0c6ac786', NULL, 0, 0, NULL, 0, 0, N'test2@api.com')
 
-INSERT INTO [dbo].[tblShoppingBasket] ([intApplicationUserId]) VALUES (N'9bf37d84-8669-4130-bce2-f3c4bb7ed52c')
-INSERT INTO [dbo].[tblShoppingBasket] ([intApplicationUserId]) VALUES (N'f72fb25c-0674-4f2b-b6e7-4576b9a6aa16')
+INSERT INTO [dbo].[tblShoppingBasket] ([strApplicationUserId]) VALUES (N'9bf37d84-8669-4130-bce2-f3c4bb7ed52c')
+INSERT INTO [dbo].[tblShoppingBasket] ([strApplicationUserId]) VALUES (N'f72fb25c-0674-4f2b-b6e7-4576b9a6aa16')
 
 SET IDENTITY_INSERT [dbo].[tblProduct] ON
 INSERT INTO [dbo].[tblProduct] ([intProductId], [strName], [intStockQuantity]) VALUES (1, N'Chocolate Cadbury assd. 200 ', 10)

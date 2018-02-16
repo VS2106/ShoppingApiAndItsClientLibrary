@@ -14,13 +14,12 @@ namespace ShoppingAPI.Migrations
                         intOrderItemId = c.Int(nullable: false, identity: true),
                         intProductId = c.Int(nullable: false),
                         intQuantity = c.Int(nullable: false),
-                        ShoppingBasket_ApplicationUserId = c.String(nullable: false, maxLength: 128),
+                        strApplicationUserId = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.intOrderItemId)
                 .ForeignKey("dbo.tblProduct", t => t.intProductId, cascadeDelete: true)
-                .ForeignKey("dbo.tblShoppingBasket", t => t.ShoppingBasket_ApplicationUserId, cascadeDelete: true)
-                .Index(t => t.intProductId)
-                .Index(t => t.ShoppingBasket_ApplicationUserId);
+                .ForeignKey("dbo.tblShoppingBasket", t => t.strApplicationUserId, cascadeDelete: true)
+                .Index(t => new { t.intProductId, t.strApplicationUserId }, unique: true);
             
             CreateTable(
                 "dbo.tblProduct",
@@ -33,37 +32,14 @@ namespace ShoppingAPI.Migrations
                 .PrimaryKey(t => t.intProductId);
             
             CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
                 "dbo.tblShoppingBasket",
                 c => new
                     {
-                        intApplicationUserId = c.String(nullable: false, maxLength: 128),
+                        strApplicationUserId = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.intApplicationUserId)
-                .ForeignKey("dbo.AspNetUsers", t => t.intApplicationUserId, cascadeDelete: true)
-                .Index(t => t.intApplicationUserId);
+                .PrimaryKey(t => t.strApplicationUserId)
+                .ForeignKey("dbo.AspNetUsers", t => t.strApplicationUserId, cascadeDelete: true)
+                .Index(t => t.strApplicationUserId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -110,32 +86,54 @@ namespace ShoppingAPI.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.tblOrderItem", "ShoppingBasket_ApplicationUserId", "dbo.tblShoppingBasket");
-            DropForeignKey("dbo.tblShoppingBasket", "intApplicationUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.tblOrderItem", "strApplicationUserId", "dbo.tblShoppingBasket");
+            DropForeignKey("dbo.tblShoppingBasket", "strApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.tblOrderItem", "intProductId", "dbo.tblProduct");
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.tblShoppingBasket", new[] { "intApplicationUserId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.tblOrderItem", new[] { "ShoppingBasket_ApplicationUserId" });
-            DropIndex("dbo.tblOrderItem", new[] { "intProductId" });
+            DropIndex("dbo.tblShoppingBasket", new[] { "strApplicationUserId" });
+            DropIndex("dbo.tblOrderItem", new[] { "intProductId", "strApplicationUserId" });
+            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.tblShoppingBasket");
-            DropTable("dbo.AspNetUserRoles");
-            DropTable("dbo.AspNetRoles");
             DropTable("dbo.tblProduct");
             DropTable("dbo.tblOrderItem");
         }
