@@ -264,6 +264,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderItemsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ShoppingBasketController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Core\Dtos\ShoppingBasketDto.cs" />
     <Compile Include="Core\Dtos\OrderItemDto.cs" />
