@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using Ploeh.Hyprlinkr;
 using ShoppingAPI.Core;
 using ShoppingAPI.Core.Dtos;
 using ShoppingAPI.Core.Models;
@@ -80,7 +81,7 @@ namespace ShoppingAPI.Controllers
                 try
                 {
                     _unitOfWork.SaveChanges();
-                    return Created(new Uri(Request.RequestUri + "/" + orderItem.Id),
+                    return Created(Url.GetLink<OrderItemController>(a => a.Get(orderItem.Id)),
                        Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
                 }
                 catch (DbUpdateConcurrencyException ex)
@@ -119,7 +120,7 @@ namespace ShoppingAPI.Controllers
                 try
                 {
                     _unitOfWork.SaveChanges();
-                    return Created(new Uri(Request.RequestUri + "/" + orderItem.Id),
+                    return Created(Url.GetLink<OrderItemController>(a => a.Get(id)),
                        Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
                 }
                 catch (DbUpdateConcurrencyException ex)
