@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ShoppingAPI.Core.Models
+namespace ShoppingAPI.Core.Dtos
 {
     // Models returned by AccountController actions.
 

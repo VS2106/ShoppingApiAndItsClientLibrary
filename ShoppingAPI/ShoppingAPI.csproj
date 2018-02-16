@@ -267,13 +267,12 @@
     <Compile Include="Controllers\OrderItemsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ShoppingBasketController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Core\Dtos\AccountBindingModels.cs" />
+    <Compile Include="Core\Dtos\AccountViewModels.cs" />
     <Compile Include="Core\Dtos\ShoppingBasketDto.cs" />
     <Compile Include="Core\Dtos\OrderItemDto.cs" />
     <Compile Include="Core\Dtos\ProductDto.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
-    <Compile Include="Core\Models\AccountBindingModels.cs" />
-    <Compile Include="Core\Models\AccountViewModels.cs" />
     <Compile Include="Core\Models\IdentityModels.cs" />
     <Compile Include="Core\Models\ShoppingBasket.cs" />
     <Compile Include="Core\Models\OrderItem.cs" />
@@ -350,7 +349,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Core\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

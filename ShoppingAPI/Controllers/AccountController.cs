@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using ShoppingAPI.Core.Dtos;
 using ShoppingAPI.Core.Models;
 using ShoppingAPI.Providers;
 using ShoppingAPI.Results;

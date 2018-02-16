@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShoppingAPI.Core.Models
+namespace ShoppingAPI.Core.Dtos
 {
     // Models used as parameters to AccountController actions.
 
