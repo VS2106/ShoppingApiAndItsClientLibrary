@@ -15,7 +15,7 @@ namespace ShoppingAPI.Controllers
     public class OrderItemsController : ApiController
     {
 
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public OrderItemsController(IUnitOfWork unitOfWork)
         {
@@ -32,34 +32,24 @@ namespace ShoppingAPI.Controllers
             return Ok(Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
         }
 
-        private bool ItemNotFoundForCurrentUser(OrderItem orderItem)
-        {
-            return orderItem == null ||
-                   orderItem.ShoppingBasket.ApplicationUserId != User.Identity.GetUserId();
-        }
-
         public IHttpActionResult Post(OrderItemDtoPostDto orderItemDtoPostDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
             try
             {
-                var shoppingBasket = _unitOfWork.ShoppingBaskets.Find(orderItemDtoPostDto.ShoppingBasketId);
-                if (shoppingBasket.ApplicationUserId != User.Identity.GetUserId())
-                {
-                    return BadRequest(
-                        $"The shopping basket with Id {orderItemDtoPostDto.ShoppingBasketId}, does not belong to current user.");
-                }
+                var shoppingBasket = _unitOfWork.ShoppingBaskets.Find(User.Identity.GetUserId());
+
+                //Data error. shoppingBasket can never be null, by EF mapping, User and Shopping Basket is one to one relationship
+                if (shoppingBasket == null)
+                    return InternalServerError();
 
                 var product = _unitOfWork.Products.Find(orderItemDtoPostDto.ProductId);
                 if (product == null)
-                {
                     return BadRequest($"The product with Id {orderItemDtoPostDto.ProductId} is not exist.");
-                }
+
                 if (product.StockQuantity - orderItemDtoPostDto.Quantity < 0)
-                {
                     return BadRequest($"You want to order {orderItemDtoPostDto.Quantity}, but the stock quantity of this product is {product.StockQuantity}");
-                }
 
                 product.StockQuantity = product.StockQuantity - orderItemDtoPostDto.Quantity;
 
@@ -73,7 +63,7 @@ namespace ShoppingAPI.Controllers
                     };
                     _unitOfWork.OrderItems.Add(orderItem);
                 }
-                else
+                else //OrderItem with same product exist
                 {
                     orderItem.Quantity = orderItem.Quantity + orderItemDtoPostDto.Quantity;
                 }
@@ -120,8 +110,7 @@ namespace ShoppingAPI.Controllers
                 try
                 {
                     _unitOfWork.SaveChanges();
-                    return Created(Url.GetLink<OrderItemsController>(a => a.Get(id)),
-                       Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
+                    return Ok();
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -146,6 +135,12 @@ namespace ShoppingAPI.Controllers
             _unitOfWork.SaveChanges();
 
             return Ok();
+        }
+
+        private bool ItemNotFoundForCurrentUser(OrderItem orderItem)
+        {
+            return orderItem == null ||
+                   orderItem.ShoppingBasket.ApplicationUserId != User.Identity.GetUserId();
         }
     }
 }

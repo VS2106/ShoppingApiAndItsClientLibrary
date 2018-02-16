@@ -11,7 +11,7 @@ namespace ShoppingAPI.Controllers
     [Authorize]
     public class ProductsController : ApiController
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public ProductsController(IUnitOfWork unitOfWork)
         {

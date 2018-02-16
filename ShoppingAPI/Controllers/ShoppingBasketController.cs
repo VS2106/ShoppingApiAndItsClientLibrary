@@ -21,10 +21,8 @@ namespace ShoppingAPI.Controllers
         {
             var shoppingBasket = _unitOfWork.ShoppingBaskets.Find(User.Identity.GetUserId());
 
+            //Data error. shoppingBasket can never be null, by EF mapping, User and Shopping Basket is one to one relationship
             if (shoppingBasket == null)
-                //shoppingBasket can never be null.
-                //Every user must have one shopping basket
-                //That's why here use InternalServerError instead of NotFound
                 return InternalServerError();
 
             return Ok(Mapper.Map<ShoppingBasket, ShoppingBasketDto>(shoppingBasket));
@@ -36,6 +34,7 @@ namespace ShoppingAPI.Controllers
         {
             var shoppingBasket = _unitOfWork.ShoppingBaskets.Find(User.Identity.GetUserId());
 
+            //Data error
             if (shoppingBasket == null)
                 return InternalServerError();
 

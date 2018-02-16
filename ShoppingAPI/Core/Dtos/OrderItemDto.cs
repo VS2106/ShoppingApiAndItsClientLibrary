@@ -13,8 +13,6 @@ namespace ShoppingAPI.Core.Dtos
     public class OrderItemDtoPostDto : OrderItemDtoPutDto
     {
         [Required]
-        public int ShoppingBasketId { get; set; }
-        [Required]
         public int ProductId { get; set; }
 
     }
