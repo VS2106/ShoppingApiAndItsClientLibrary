@@ -14,7 +14,7 @@ namespace ShoppingAPI.Persistence.Maps
                 .HasColumnName("intApplicationUserId");
 
             HasMany(t => t.OrderItems)
-                .WithRequired();
+                .WithRequired(i => i.ShoppingBasket);
         }
     }
 }
