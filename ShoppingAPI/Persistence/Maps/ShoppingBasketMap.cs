@@ -10,11 +10,14 @@ namespace ShoppingAPI.Persistence.Maps
             HasKey(t => t.ApplicationUserId);
 
             ToTable("tblShoppingBasket");
+            Ignore(t => t.Id);
             Property(t => t.ApplicationUserId)
-                .HasColumnName("intApplicationUserId");
+                .HasColumnName("strApplicationUserId");
+
 
             HasMany(t => t.OrderItems)
-                .WithRequired(i => i.ShoppingBasket);
+                .WithRequired(i => i.ShoppingBasket)
+                .HasForeignKey(i => i.ShoppingBasketId);
         }
     }
 }

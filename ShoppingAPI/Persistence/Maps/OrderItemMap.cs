@@ -19,6 +19,13 @@ namespace ShoppingAPI.Persistence.Maps
                 .HasColumnName("intQuantity")
                 .IsRequired()
                 .IsConcurrencyToken();
+            Property(t => t.ShoppingBasketId)
+                .HasColumnName("strApplicationUserId")
+                .IsRequired();
+            /*ShoppingBasketId and ProductId of OrderItem is multi column unique index
+             *For a shopping basket, there won't be multi OrderItems with the same product. */
+            HasIndex(t => new { t.ProductId, t.ShoppingBasketId })
+                .IsUnique();
         }
     }
 }
