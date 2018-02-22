@@ -13,7 +13,7 @@ namespace ShoppingAPI.Core.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
 
         public ShoppingBasket()
         {

@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Data.Entity.Infrastructure;
+using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using ShoppingAPI.Core;
@@ -28,20 +29,33 @@ namespace ShoppingAPI.Controllers
             return Ok(Mapper.Map<ShoppingBasket, ShoppingBasketDto>(shoppingBasket));
         }
 
-        [Route("shoppingbasket/clearout")]
+        [Route("api/shoppingbasket/clearout")]
         [HttpPut]
         public IHttpActionResult ClearOut()
         {
             var shoppingBasket = _unitOfWork.ShoppingBaskets.Find(User.Identity.GetUserId());
 
-            //Data error
             if (shoppingBasket == null)
                 return InternalServerError();
 
-            shoppingBasket.OrderItems.Clear();
-            _unitOfWork.SaveChanges();
+            foreach (var shoppingBasketOrderItem in shoppingBasket.OrderItems)
+            {
+                shoppingBasketOrderItem.Product.StockQuantity =
+                    shoppingBasketOrderItem.Quantity + shoppingBasketOrderItem.Product.StockQuantity;
+            }
 
-            return Ok();
+            _unitOfWork.OrderItems.DeleteRange(shoppingBasket.OrderItems);
+
+            try
+            {
+                _unitOfWork.SaveChanges();
+                return Ok();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                //TODO later: handle concurrency exception
+                return InternalServerError(ex);
+            }
         }
     }
 }

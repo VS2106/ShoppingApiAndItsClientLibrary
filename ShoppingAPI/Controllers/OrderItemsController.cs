@@ -13,7 +13,6 @@ namespace ShoppingAPI.Controllers
     [Authorize]
     public class OrderItemsController : ApiController
     {
-
         private readonly IUnitOfWork _unitOfWork;
 
         public OrderItemsController(IUnitOfWork unitOfWork)
@@ -50,14 +49,16 @@ namespace ShoppingAPI.Controllers
                 return BadRequest($"The product, Id {orderItemDtoPostDto.ProductId} does not exist.");
 
             if (product.StockQuantity - orderItemDtoPostDto.Quantity < 0)
-                return BadRequest($"You want to order {orderItemDtoPostDto.Quantity}, but the stock quantity of this product is {product.StockQuantity}");
+                return
+                    BadRequest(
+                        $"You want to order {orderItemDtoPostDto.Quantity}, but the stock quantity of this product is {product.StockQuantity}");
 
             product.StockQuantity = product.StockQuantity - orderItemDtoPostDto.Quantity;
 
             var orderItem = shoppingBasket.OrderItems.FirstOrDefault(o => o.ProductId == orderItemDtoPostDto.ProductId);
             if (orderItem == null)
             {
-                orderItem = new OrderItem()
+                orderItem = new OrderItem
                 {
                     ProductId = orderItemDtoPostDto.ProductId,
                     ShoppingBasketId = shoppingBasket.Id,
@@ -74,11 +75,18 @@ namespace ShoppingAPI.Controllers
             {
                 _unitOfWork.SaveChanges();
                 return Created(Url.GetLink<OrderItemsController>(a => a.Get(orderItem.Id)),
-                   Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
+                    Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
             }
             catch (DbUpdateConcurrencyException ex)
+            // Entities may have been modified or deleted since entities were loaded.
             {
-                //TODO later: hander concurrency exception
+                //TODO later: handle concurrency exception
+                return InternalServerError(ex);
+            }
+            catch (DbUpdateException ex)
+            // Same product order item have been added to the shopping basket since entities were loaded. (see OrderItemMap.cs)
+            {
+                //TODO later: handle multi column unique index exception
                 return InternalServerError(ex);
             }
         }
@@ -101,22 +109,15 @@ namespace ShoppingAPI.Controllers
 
             if (stockQuantity - orderItemDtoPutDto.Quantity < 0)
             {
-                return BadRequest($"You want to change the quantity of this order to {orderItemDtoPutDto.Quantity}, but the stock quantity of this product is {stockQuantity}");
+                return
+                    BadRequest(
+                        $"You want to change the quantity of this order to {orderItemDtoPutDto.Quantity}, but the stock quantity of this product is {stockQuantity}");
             }
 
             product.StockQuantity = stockQuantity - orderItemDtoPutDto.Quantity;
             orderItem.Quantity = orderItemDtoPutDto.Quantity;
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-                return Ok();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                //TODO later: hander concurrency error
-                return InternalServerError(ex);
-            }
+            return GetResultAfterTryingToSaveChanges();
         }
 
         public IHttpActionResult Delete(int id)
@@ -129,10 +130,24 @@ namespace ShoppingAPI.Controllers
             if (ItemDoesNotBelongToCurrentUser(orderItem))
                 return Unauthorized();
 
+            orderItem.Product.StockQuantity = orderItem.Product.StockQuantity + orderItem.Quantity;
             _unitOfWork.OrderItems.Delete(orderItem);
-            _unitOfWork.SaveChanges();
+            return GetResultAfterTryingToSaveChanges();
+        }
 
-            return Ok();
+        private IHttpActionResult GetResultAfterTryingToSaveChanges()
+        {
+            try
+            {
+                _unitOfWork.SaveChanges();
+                return Ok();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            // Entities may have been modified or deleted since entities were loaded.
+            {
+                //TODO later: handle concurrency error
+                return InternalServerError(ex);
+            }
         }
 
         private bool ItemDoesNotBelongToCurrentUser(OrderItem orderItem)
