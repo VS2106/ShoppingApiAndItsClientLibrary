@@ -22,5 +22,8 @@ namespace ShoppingAPI.Controllers
         {
             return Ok(Mapper.Map<List<Product>, List<ProductDto>>(_unitOfWork.Products.GetAll().ToList()));
         }
+
+        /*TODO later: add more actions for get products by conditions (name, id, type, maybe also paging the results) 
+         *So that client don't have to get the whole product list always*/
     }
 }

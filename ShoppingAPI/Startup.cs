@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
 using ShoppingAPI;
 using ShoppingAPI.Migrations;
-using ShoppingAPI.Persistence;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -24,13 +23,7 @@ namespace ShoppingAPI
         {
             try
             {
-                using (var context = new ShoppingApiDbContext())
-                {
-                    Database.SetInitializer(
-                        new MigrateDatabaseToLatestVersion<ShoppingApiDbContext, Configuration>());
-
-                    context.Database.Initialize(true);
-                }
+                new DbMigrator(new Configuration()).Update();
             }
             catch (Exception)
             {
