@@ -1,23 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Configuration;
 
 namespace ShoppingAPI.Core.Dtos
 {
-    public class OrderItemDtoPutDto
+    public class OrderItemPutDto
     {
-        [Required]
-        [IntegerValidator(MinValue = 1)]
+        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
     }
 
-    public class OrderItemDtoPostDto : OrderItemDtoPutDto
+    public class OrderItemPostDto : OrderItemPutDto
     {
-        [Required]
         public int ProductId { get; set; }
 
     }
 
-    public class OrderItemDtoGetDto : OrderItemDtoPutDto
+    public class OrderItemGetDto : OrderItemPutDto
     {
         public int Id { get; set; }
         public ProductDto Product { get; set; }

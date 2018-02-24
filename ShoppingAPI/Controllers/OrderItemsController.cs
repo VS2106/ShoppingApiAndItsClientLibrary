@@ -1,9 +1,9 @@
-﻿using System.Data.Entity.Infrastructure;
+﻿using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
-using Ploeh.Hyprlinkr;
 using ShoppingAPI.Core;
 using ShoppingAPI.Core.Dtos;
 using ShoppingAPI.Core.Models;
@@ -30,10 +30,10 @@ namespace ShoppingAPI.Controllers
             if (ItemDoesNotBelongToCurrentUser(orderItem))
                 return Unauthorized();
 
-            return Ok(Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
+            return Ok(Mapper.Map<OrderItem, OrderItemGetDto>(orderItem));
         }
 
-        public IHttpActionResult Post(OrderItemDtoPostDto orderItemDtoPostDto)
+        public IHttpActionResult Post(OrderItemPostDto orderItemDtoPostDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -74,24 +74,24 @@ namespace ShoppingAPI.Controllers
             try
             {
                 _unitOfWork.SaveChanges();
-                return Created(Url.GetLink<OrderItemsController>(a => a.Get(orderItem.Id)),
-                    Mapper.Map<OrderItem, OrderItemDtoGetDto>(orderItem));
+                return Created(new Uri($@"{Request.RequestUri}/{orderItem.Id}"),
+                    Mapper.Map<OrderItem, OrderItemGetDto>(orderItem));
             }
             catch (DbUpdateConcurrencyException ex)
-            // Entities may have been modified or deleted since entities were loaded.
+            // Entities may have been modified or deleted since entities were loaded.(OrderItemMap.cs and ProductMap.cs applied concurrency token to quantity)
             {
                 //TODO later: handle concurrency exception
                 return InternalServerError(ex);
             }
             catch (DbUpdateException ex)
-            // Same product order item have been added to the shopping basket since entities were loaded. (see OrderItemMap.cs)
+            // Same product order item have been added to the shopping basket since entities were loaded. (OrderItemMap.cs applied a multi column unique index)
             {
                 //TODO later: handle multi column unique index exception
                 return InternalServerError(ex);
             }
         }
 
-        public IHttpActionResult Put(int id, OrderItemDtoPutDto orderItemDtoPutDto)
+        public IHttpActionResult Put(int id, OrderItemPutDto orderItemDtoPutDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();

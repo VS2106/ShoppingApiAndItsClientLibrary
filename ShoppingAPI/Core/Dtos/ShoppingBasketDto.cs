@@ -6,11 +6,11 @@ namespace ShoppingAPI.Core.Dtos
     {
         [Required]
         public string Id { get; set; }
-        public OrderItemDtoGetDto[] OrderItems { get; set; }
+        public OrderItemGetDto[] OrderItems { get; set; }
 
         public ShoppingBasketDto()
         {
-            OrderItems = new OrderItemDtoGetDto[0];
+            OrderItems = new OrderItemGetDto[0];
         }
     }
 }

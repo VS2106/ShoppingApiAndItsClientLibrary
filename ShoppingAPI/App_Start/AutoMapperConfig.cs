@@ -12,7 +12,7 @@ namespace ShoppingAPI.App_Start
             {
                 config.CreateMap<Product, ProductDto>().ReverseMap();
                 config.CreateMap<ShoppingBasket, ShoppingBasketDto>().ReverseMap();
-                config.CreateMap<OrderItem, OrderItemDtoGetDto>().ReverseMap();
+                config.CreateMap<OrderItem, OrderItemGetDto>().ReverseMap();
             });
         }
     }
