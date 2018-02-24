@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Http.Results;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ShoppingAPI.Controllers;
 using ShoppingAPI.Core.Dtos;
 using ShoppingAPI.Core.Models;
@@ -9,20 +9,20 @@ using ShoppingAPI.Tests.Extensions;
 
 namespace ShoppingAPI.Tests.Controllers
 {
-    [TestClass]
+    [TestFixture]
     public class ShoppingBasketControllerTest : ControllerTestBase
     {
         private ShoppingBasketController _controller;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
-            base.TestInitialize();
+            base.SetUp();
             _controller = new ShoppingBasketController(_mockUnitOfWork.Object);
             _controller.MockCurrentUser(_applicationUserId, "test1@api.com");
         }
 
-        [TestMethod]
+        [Test]
         public void Get_NoShoppingBasketFoundForCurrentUser_ShouldReturnInternalServerError()
         {
             _mockShoppingBasketRepository.Setup(i => i.Find(_applicationUserId)).Returns((ShoppingBasket)null);
@@ -31,7 +31,7 @@ namespace ShoppingAPI.Tests.Controllers
             result.Should().BeOfType<InternalServerErrorResult>();
         }
 
-        [TestMethod]
+        [Test]
         public void Get_ValidRequest_ShouldReturnOkWithCurrentUserShoppingBasket()
         {
             var result = _controller.Get();
@@ -45,7 +45,7 @@ namespace ShoppingAPI.Tests.Controllers
                 .Be(true);
         }
 
-        [TestMethod]
+        [Test]
         public void ClearOut_NoShoppingBasketFoundForCurrentUser_ShouldReturnInternalServerError()
         {
             _mockShoppingBasketRepository.Setup(i => i.Find(_applicationUserId)).Returns((ShoppingBasket)null);
@@ -55,7 +55,7 @@ namespace ShoppingAPI.Tests.Controllers
         }
 
 
-        [TestMethod]
+        [Test]
         public void ClearOut_ValidRequest_ShouldReturnOk_UpdateStockQuantityOfProduct()
         {
             var orderItemThatNeedToBeClearOut = _currentUserShoppingBasketThatHasOrderItem1

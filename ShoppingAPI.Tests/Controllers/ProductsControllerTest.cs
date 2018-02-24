@@ -3,24 +3,25 @@ using System.Linq;
 using System.Web.Http.Results;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ShoppingAPI.Controllers;
 using ShoppingAPI.Core.Dtos;
 
 namespace ShoppingAPI.Tests.Controllers
 {
-    [TestClass]
+    [TestFixture]
     public class ProductsControllerTest : ControllerTestBase
     {
         private ProductsController _controller;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
-            base.TestInitialize();
+            base.SetUp();
             _controller = new ProductsController(_mockUnitOfWork.Object);
         }
 
-        [TestMethod]
+        [Test]
         public void Get_ShouldReturnOKWithAllProducts()
         {
             var result = _controller.Get();

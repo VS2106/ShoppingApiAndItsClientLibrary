@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ShoppingAPI.Core.Dtos;
 
 namespace ShoppingAPI.Tests.Dtos
 {
-    [TestClass]
+    [TestFixture]
     public class OrderItemPutDtoTest
     {
-        [TestMethod]
+        [Test]
         public void SetQuantityOfOrderItemPutDtoSmallerThan1_ModelStateShouldBeNotValid()
         {
             var orderItemPutDto = new OrderItemPutDto()
@@ -24,7 +24,7 @@ namespace ShoppingAPI.Tests.Dtos
             isModelStateValid.Should().Be(false);
         }
 
-        [TestMethod]
+        [Test]
         public void SetValidValueForQuantityOfOrderItemPutDto_ModelStateShouldBeValid()
         {
             var orderItemPutDto = new OrderItemPutDto()

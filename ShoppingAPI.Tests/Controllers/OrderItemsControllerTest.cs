@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Web.Http.Results;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ShoppingAPI.Controllers;
 using ShoppingAPI.Core.Dtos;
 using ShoppingAPI.Core.Models;
@@ -10,27 +10,27 @@ using ShoppingAPI.Tests.Extensions;
 
 namespace ShoppingAPI.Tests.Controllers
 {
-    [TestClass]
+    [TestFixture]
     public class OrderItemsControllerTest : ControllerTestBase
     {
         private OrderItemsController _controller;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
-            base.TestInitialize();
+            base.SetUp();
             _controller = new OrderItemsController(_mockUnitOfWork.Object);
             _controller.MockCurrentUser(_applicationUserId, "test1@api.com");
         }
 
-        [TestMethod]
+        [Test]
         public void Get_NoOrderItemWithGivenIdExist_ShouldReturnNotFound()
         {
             var result = _controller.Get(489);
             result.Should().BeOfType<NotFoundResult>();
         }
 
-        [TestMethod]
+        [Test]
         public void Get_OrderItemNotBelongToCurrentUser_ShouldReturnUnauthorized()
         {
             var result = _controller.Get(_orderItem2ThatDoesNotBelongToCurrentUser.Id);
@@ -38,7 +38,7 @@ namespace ShoppingAPI.Tests.Controllers
         }
 
 
-        [TestMethod]
+        [Test]
         public void Get_ValidRequest_ShouldReturnOKWithTheOrderItem()
         {
             var result = _controller.Get(_orderItem1ThatHasProduct1.Id);
@@ -51,7 +51,7 @@ namespace ShoppingAPI.Tests.Controllers
             okNegotiatedContentResultContent.Quantity.Should().Be(_orderItem1ThatHasProduct1.Quantity);
         }
 
-        [TestMethod]
+        [Test]
         public void Post_NotValidRequest_ShouldReturnBadRequest()
         {
             _controller.ModelState.AddModelError("Quantity", "test");
@@ -59,7 +59,7 @@ namespace ShoppingAPI.Tests.Controllers
             result.Should().BeOfType<BadRequestResult>();
         }
 
-        [TestMethod]
+        [Test]
         public void Post_NoShoppingBasketFoundForCurrentUser_ShouldReturnInternalServerError()
         {
             _mockShoppingBasketRepository.Setup(i => i.Find(_applicationUserId)).Returns((ShoppingBasket)null);
@@ -67,7 +67,7 @@ namespace ShoppingAPI.Tests.Controllers
             result.Should().BeOfType<InternalServerErrorResult>();
         }
 
-        [TestMethod]
+        [Test]
         public void Post_ProductNotFound_ShouldReturnBadRequestWithErrorMessage()
         {
             var productId = 123;
@@ -79,7 +79,7 @@ namespace ShoppingAPI.Tests.Controllers
             ((BadRequestErrorMessageResult)result).Message.Should().Contain(productId.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void Post_StockQuantityOfProductIsNotEnough_ShouldReturnBadRequestWithErrorMessage()
         {
             var quantityOfOrderItem = 800;
@@ -94,7 +94,7 @@ namespace ShoppingAPI.Tests.Controllers
         }
 
 
-        [TestMethod]
+        [Test]
         public void
             Post_SameProductOrderItemExist_ShouldUpdateQuantityOfExistingOrderItem_UpdateStockQuantityOfProduct_ReturnCorrectLocation
             ()
@@ -121,7 +121,7 @@ namespace ShoppingAPI.Tests.Controllers
                 .Be(originalQuantityOfOrderItem1ThatHasProduct1 + orderItemPostDto.Quantity);
         }
 
-        [TestMethod]
+        [Test]
         public void Post_ValidRequest_ShouldCreateNewOrderItem_UpdateStockQuantityOfProduct_ReturnCreated()
         {
             var originalStockQuantityOfProduct2 = _product2.StockQuantity;
@@ -139,7 +139,7 @@ namespace ShoppingAPI.Tests.Controllers
                 .Be(orderItemPostDto.Quantity);
         }
 
-        [TestMethod]
+        [Test]
         public void Put_NotValidRequest_ShouldReturnBadRequest()
         {
             _controller.ModelState.AddModelError("Quantity", "test");
@@ -148,7 +148,7 @@ namespace ShoppingAPI.Tests.Controllers
             result.Should().BeOfType<BadRequestResult>();
         }
 
-        [TestMethod]
+        [Test]
         public void Put_NoOrderItemWithGivenIdExists_ShouldReturnNotFound()
         {
             var result = _controller.Put(456, new OrderItemPutDto());
@@ -156,7 +156,7 @@ namespace ShoppingAPI.Tests.Controllers
             result.Should().BeOfType<NotFoundResult>();
         }
 
-        [TestMethod]
+        [Test]
         public void Put_OrderItemNotBelongToCurrentUser_ShouldReturnUnauthorized()
         {
             var result = _controller.Put(_orderItem2ThatDoesNotBelongToCurrentUser.Id, new OrderItemPutDto());
@@ -165,7 +165,7 @@ namespace ShoppingAPI.Tests.Controllers
         }
 
 
-        [TestMethod]
+        [Test]
         public void Put_StockQuantityOfProductIsNotEnough_ShouldReturnBadRequestWithErrorMessage()
         {
             var quantityOfOrderItem = 800;
@@ -183,7 +183,7 @@ namespace ShoppingAPI.Tests.Controllers
             resultMessage.Should().Contain(quantityOfOrderItem.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void
             Put_ValidRequest_ShouldUpdateQuantityOfOrderItem_UpdateStockQuantityOfProduct_ReturnOk()
         {
@@ -201,7 +201,7 @@ namespace ShoppingAPI.Tests.Controllers
                 .Be(orderItemPutDto.Quantity);
         }
 
-        [TestMethod]
+        [Test]
         public void Delete_NoOrderItemWithGivenIdExists_ShouldReturnNotFound()
         {
             var result = _controller.Delete(456);
@@ -209,7 +209,7 @@ namespace ShoppingAPI.Tests.Controllers
             result.Should().BeOfType<NotFoundResult>();
         }
 
-        [TestMethod]
+        [Test]
         public void Delete_OrderItemNotBelongToCurrentUser_ShouldReturnUnauthorized()
         {
             var result = _controller.Delete(_orderItem2ThatDoesNotBelongToCurrentUser.Id);
@@ -217,7 +217,7 @@ namespace ShoppingAPI.Tests.Controllers
             result.Should().BeOfType<UnauthorizedResult>();
         }
 
-        [TestMethod]
+        [Test]
         public void
             Delete_ValidRequest_ShouldUpdateStockQuantityOfProduct_ReturnOk()
         {

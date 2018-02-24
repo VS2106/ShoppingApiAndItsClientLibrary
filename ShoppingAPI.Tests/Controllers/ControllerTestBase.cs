@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Moq;
-using ShoppingAPI.App_Start;
 using ShoppingAPI.Core;
 using ShoppingAPI.Core.Models;
 using ShoppingAPI.Core.Repositories;
@@ -25,7 +24,7 @@ namespace ShoppingAPI.Tests.Controllers
         protected Product _product2;
 
 
-        public void TestInitialize()
+        public void SetUp()
         {
             _mockOrderItemRepository = new Mock<IOrderItemRepository>();
             _mockProductRepository = new Mock<IProductRepository>();
@@ -35,8 +34,6 @@ namespace ShoppingAPI.Tests.Controllers
             _mockUnitOfWork.SetupGet(u => u.OrderItems).Returns(_mockOrderItemRepository.Object);
             _mockUnitOfWork.SetupGet(u => u.Products).Returns(_mockProductRepository.Object);
             _mockUnitOfWork.SetupGet(u => u.ShoppingBaskets).Returns(_mockShoppingBasketRepository.Object);
-
-            AutoMapperConfig.Initialize();
 
             SetUpDomainData();
         }
