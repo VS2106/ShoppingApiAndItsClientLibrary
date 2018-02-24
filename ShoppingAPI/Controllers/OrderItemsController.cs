@@ -48,12 +48,12 @@ namespace ShoppingAPI.Controllers
             if (product == null)
                 return BadRequest($"The product, Id {orderItemDtoPostDto.ProductId} does not exist.");
 
-            if (product.StockQuantity - orderItemDtoPostDto.Quantity < 0)
+            var stockQuantityOfProductAfterOrdering = product.StockQuantity - orderItemDtoPostDto.Quantity;
+            if (stockQuantityOfProductAfterOrdering < 0)
                 return
                     BadRequest(
                         $"You want to order {orderItemDtoPostDto.Quantity}, but the stock quantity of this product is {product.StockQuantity}");
-
-            product.StockQuantity = product.StockQuantity - orderItemDtoPostDto.Quantity;
+            product.StockQuantity = stockQuantityOfProductAfterOrdering;
 
             var orderItem = shoppingBasket.OrderItems.FirstOrDefault(o => o.ProductId == orderItemDtoPostDto.ProductId);
             if (orderItem == null)
@@ -105,16 +105,16 @@ namespace ShoppingAPI.Controllers
                 return Unauthorized();
 
             var product = _unitOfWork.Products.Find(orderItem.ProductId);
-            var stockQuantity = product.StockQuantity + orderItem.Quantity;
 
-            if (stockQuantity - orderItemDtoPutDto.Quantity < 0)
+            var stockQuantity = product.StockQuantity + orderItem.Quantity;
+            var stockQuantityOfProductAfterOrdering = stockQuantity - orderItemDtoPutDto.Quantity;
+            if (stockQuantityOfProductAfterOrdering < 0)
             {
                 return
                     BadRequest(
                         $"You want to change the quantity of this order to {orderItemDtoPutDto.Quantity}, but the stock quantity of this product is {stockQuantity}");
             }
-
-            product.StockQuantity = stockQuantity - orderItemDtoPutDto.Quantity;
+            product.StockQuantity = stockQuantityOfProductAfterOrdering;
             orderItem.Quantity = orderItemDtoPutDto.Quantity;
 
             return GetResultAfterTryingToSaveChanges();
