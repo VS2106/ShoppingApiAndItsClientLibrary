@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Demo</title>
+</head>
+<body>
+<p style="padding: 10px">See result in console</p>
+
+<div style="padding: 10px">
+    <input id="btnLogin" type="button" value="Login est1@api.com"/>
+    <input id="btnLogout" type="button" value="Logout"/>
+    <input id="btnRegister" type="button" value="Register s@12.com"/>
+    <input id="btnLoginAfterRegister" type="button" value="Login s@12.com"/>
+</div>
+<div style="padding: 10px">
+    <input id="btnGetProducts" type="button" value="GetProducts"/>
+    <input id="btnGetShoppingBasket" type="button" value="GetShoppingBasket"/>
+    <input id="btnClearOutShoppingBasket" type="button" value="ClearOutShoppingBasket"/>
+</div>
+<div style="padding: 10px">
+    <div>
+        <input id="btnAddOrderItemToShoppingBasket" type="button" value="AddOrderItemToShoppingBasket (please fill in productId and quantity)"/>
+        *AddOrderItemToShoppingBasket: If the same product order item already exists in the shopping basket, instead of creating a new item, this function will add the new order's quantity to the existing one.
+    </div>
+    <div>
+        <input id="btnChangeQuantityOfOrderItemt" type="button" value="ChangeQuantityOfOrderItem (please fill in orderItemId and quantity)"/>
+    </div>
+    <div>
+        <input id="btnRemoveOrderItemFromShoppingBasket" type="button" value="RemoveOrderItemFromShoppingBasket (please fill in orderItemId)"/>
+    </div>
+    <div>
+        productId <input id="productId"/>
+    </div>
+    <div>
+        orderItemId <input id="orderItemId"/>
+    </div>
+    <div>
+        quantity <input id="quantity"/>
+    </div>
+</div>
+
+<script src="../Scripts/jquery-1.10.2.min.js"></script>
+<script src="../Client/ShoppingApiClient.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var logSuccessResult = function(response, textStatus, jqXhr) {
+            console.log(response);
+        };
+        var logErrorResult = function(jqXhr, textStatus, errorThrown) {
+            console.log(jqXhr);
+        };
+        $("#btnLogin").click(
+            function() {
+                ShoppingApiClient.Login("test1@api.com", "!TestWebApi1", logSuccessResult, logErrorResult);
+            });
+        $("#btnLogout").click(
+            function() {
+                ShoppingApiClient.Logout();
+            });
+        $("#btnRegister").click(
+            function() {
+                ShoppingApiClient.Register("s@12.com", "yaya!YEYEYE1", "yaya!YEYEYE1", logSuccessResult, logErrorResult);
+            });
+        $("#btnLoginAfterRegister").click(
+            function() {
+                ShoppingApiClient.Login("s@12.com", "yaya!YEYEYE1", logSuccessResult, logErrorResult);
+            });
+        $("#btnGetProducts").click(
+            function() {
+                ShoppingApiClient.GetProducts(logSuccessResult, logErrorResult);
+            });
+        $("#btnGetShoppingBasket").click(
+            function() {
+                ShoppingApiClient.GetShoppingBasket(logSuccessResult, logErrorResult);
+            });
+        $("#btnClearOutShoppingBasket").click(
+            function() {
+                ShoppingApiClient.ClearOutShoppingBasket(logSuccessResult, logErrorResult);
+            });
+        $("#btnAddOrderItemToShoppingBasket").click(
+            function() {
+                //If the same product order item already exists in the shopping basket,  
+                //instead of creating a new item, this function will add the new order's quantity to the existing one.
+                ShoppingApiClient.AddOrderItemToShoppingBasket(
+                    $("#productId").val(),
+                    $("#quantity").val(),
+                    logSuccessResult, logErrorResult);
+            });
+        $("#btnChangeQuantityOfOrderItemt").click(
+            function() {
+                ShoppingApiClient.ChangeQuantityOfOrderItem(
+                    $("#orderItemId").val(),
+                    $("#quantity").val(),
+                    logSuccessResult, logErrorResult);
+            });
+        $("#btnRemoveOrderItemFromShoppingBasket").click(
+            function() {
+                ShoppingApiClient.RemoveOrderItemFromShoppingBasket(
+                    $("#orderItemId").val(),
+                    logSuccessResult, logErrorResult);
+            });
+    });
+</script>
+</body>
+</html>
