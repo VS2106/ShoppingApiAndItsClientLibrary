@@ -6,14 +6,19 @@ namespace ShoppingAPI.App_Start
 {
     public class AutoMapperConfig
     {
+        private static bool _isInitialized;
         public static void Initialize()
         {
-            Mapper.Initialize((config) =>
+            if (!_isInitialized)
             {
-                config.CreateMap<Product, ProductDto>().ReverseMap();
-                config.CreateMap<ShoppingBasket, ShoppingBasketDto>().ReverseMap();
-                config.CreateMap<OrderItem, OrderItemGetDto>().ReverseMap();
-            });
+                Mapper.Initialize((config) =>
+                {
+                    config.CreateMap<Product, ProductDto>().ReverseMap();
+                    config.CreateMap<ShoppingBasket, ShoppingBasketDto>().ReverseMap();
+                    config.CreateMap<OrderItem, OrderItemGetDto>().ReverseMap();
+                });
+                _isInitialized = true;
+            }
         }
     }
 }
