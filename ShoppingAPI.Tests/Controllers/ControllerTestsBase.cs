@@ -16,7 +16,6 @@ namespace ShoppingAPI.Tests.Controllers
         protected Mock<IOrderItemRepository> _mockOrderItemRepository;
         protected Mock<IProductRepository> _mockProductRepository;
         protected Mock<IShoppingBasketRepository> _mockShoppingBasketRepository;
-
         protected Mock<IUnitOfWork> _mockUnitOfWork;
         protected OrderItem _orderItem1ThatHasProduct1;
         protected OrderItem _orderItem2ThatDoesNotBelongToCurrentUser;
@@ -24,7 +23,7 @@ namespace ShoppingAPI.Tests.Controllers
         protected Product _product2;
 
 
-        public void SetUp()
+        protected void SetUp()
         {
             _mockOrderItemRepository = new Mock<IOrderItemRepository>();
             _mockProductRepository = new Mock<IProductRepository>();

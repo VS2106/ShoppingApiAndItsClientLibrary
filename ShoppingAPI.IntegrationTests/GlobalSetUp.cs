@@ -76,7 +76,7 @@ namespace ShoppingAPI.IntegrationTests
 
         private void SetCurrentUserUserA()
         {
-            var currentUser = _context.Users.FirstOrDefault(u => u.UserName == "UserA");
+            var currentUser = _context.Users.First(u => u.UserName == "UserA");
             _currentUserId = currentUser.Id;
             _currentUserName = currentUser.UserName;
         }

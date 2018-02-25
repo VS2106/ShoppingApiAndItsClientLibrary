@@ -39,8 +39,11 @@ namespace ShoppingAPI.Tests.Controllers
 
             result.Should().BeOfType<OkNegotiatedContentResult<ShoppingBasketDto>>();
             resultContent.Id.Should().Be(_applicationUserId);
-            resultContent.OrderItems.Select(o => o.Id).OrderBy(t => t)
-                .SequenceEqual(_currentUserShoppingBasketThatHasOrderItem1.OrderItems.Select(o => o.Id).OrderBy(t => t))
+            resultContent
+                .OrderItems.OrderBy(i => i.Id).Select(i => $"{i.Id}{i.Product.Name}{i.Quantity}")
+                .SequenceEqual(
+                    _currentUserShoppingBasketThatHasOrderItem1
+                        .OrderItems.OrderBy(i => i.Id).Select(i => $"{i.Id}{i.Product.Name}{i.Quantity}"))
                 .Should()
                 .Be(true);
         }

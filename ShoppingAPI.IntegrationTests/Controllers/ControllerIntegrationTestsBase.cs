@@ -14,7 +14,7 @@ namespace ShoppingAPI.IntegrationTests.Controllers
         protected void SetUp()
         {
             _unitOfWork = new UnitOfWork(new ShoppingApiDbContext());
-            _productA = _unitOfWork.Products.FirstOrDefault(p => p.Name == "ProductA");
+            _productA = _unitOfWork.Products.First(p => p.Name == "ProductA");
             _currentUserShoppingBasket = _unitOfWork.ShoppingBaskets.FindByUserId(GlobalSetUp._currentUserId);
         }
 

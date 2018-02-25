@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Http.Results;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using ShoppingAPI.Controllers;
 using ShoppingAPI.Core.Dtos;
@@ -28,8 +27,9 @@ namespace ShoppingAPI.Tests.Controllers
             var resultContent = ((OkNegotiatedContentResult<List<ProductDto>>)result).Content;
 
             result.Should().BeOfType<OkNegotiatedContentResult<List<ProductDto>>>();
-            resultContent.Select(o => o.Id).OrderBy(t => t)
-                .SequenceEqual(_allProducts.Select(o => o.Id).OrderBy(t => t))
+            resultContent.OrderBy(i => i.Id).Select(i => $"{i.Id}{i.Name}{i.StockQuantity}")
+                .SequenceEqual(
+                    _allProducts.OrderBy(i => i.Id).Select(i => $"{i.Id}{i.Name}{i.StockQuantity}"))
                 .Should()
                 .Be(true);
         }
