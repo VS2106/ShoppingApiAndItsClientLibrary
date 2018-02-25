@@ -57,7 +57,5 @@ namespace ShoppingAPI.IntegrationTests.Controllers
             _unitOfWork.Reload(_productA);
             _productA.StockQuantity.Should().Be(productAOriginalStockQuantity + orderItemInDbOriginalQuantity);
         }
-
-
     }
 }
