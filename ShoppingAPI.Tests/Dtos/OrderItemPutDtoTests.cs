@@ -7,7 +7,7 @@ using ShoppingAPI.Core.Dtos;
 namespace ShoppingAPI.Tests.Dtos
 {
     [TestFixture]
-    public class OrderItemPutDtoTest
+    public class OrderItemPutDtoTests
     {
         [Test]
         public void SetQuantityOfOrderItemPutDtoSmallerThan1_ModelStateShouldBeNotValid()

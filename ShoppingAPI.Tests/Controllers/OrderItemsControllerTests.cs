@@ -11,7 +11,7 @@ using ShoppingAPI.Tests.Extensions;
 namespace ShoppingAPI.Tests.Controllers
 {
     [TestFixture]
-    public class OrderItemsControllerTest : ControllerTestBase
+    public class OrderItemsControllerTests : ControllerTestsBase
     {
         private OrderItemsController _controller;
 

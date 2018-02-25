@@ -118,14 +118,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ControllerTestBase.cs" />
-    <Compile Include="Controllers\ProductsControllerTest.cs" />
-    <Compile Include="Controllers\ShoppingBasketControllerTest.cs" />
-    <Compile Include="Dtos\OrderItemPutDtoTest.cs" />
+    <Compile Include="Controllers\ControllerTestsBase.cs" />
+    <Compile Include="Controllers\ProductsControllerTests.cs" />
+    <Compile Include="Controllers\ShoppingBasketControllerTests.cs" />
+    <Compile Include="Dtos\OrderItemPutDtoTests.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="GlobalSetUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\OrderItemsControllerTest.cs" />
+    <Compile Include="Controllers\OrderItemsControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

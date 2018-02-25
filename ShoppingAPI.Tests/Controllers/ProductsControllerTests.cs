@@ -10,7 +10,7 @@ using ShoppingAPI.Core.Dtos;
 namespace ShoppingAPI.Tests.Controllers
 {
     [TestFixture]
-    public class ProductsControllerTest : ControllerTestBase
+    public class ProductsControllerTests : ControllerTestsBase
     {
         private ProductsController _controller;
 

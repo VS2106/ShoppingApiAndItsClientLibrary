@@ -8,7 +8,7 @@ using ShoppingAPI.Core.Repositories;
 
 namespace ShoppingAPI.Tests.Controllers
 {
-    public class ControllerTestBase
+    public class ControllerTestsBase
     {
         protected readonly string _applicationUserId = Guid.NewGuid().ToString("N");
         protected List<Product> _allProducts;
