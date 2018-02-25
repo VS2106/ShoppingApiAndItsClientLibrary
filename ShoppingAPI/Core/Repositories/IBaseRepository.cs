@@ -10,6 +10,7 @@ namespace ShoppingAPI.Core.Repositories
     {
         IQueryable<T> GetAll();
         T Find(params object[] keys);
+        T First(Expression<Func<T, bool>> expression);
         T FirstOrDefault(Expression<Func<T, bool>> expression);
         T Single(Expression<Func<T, bool>> expression);
         T SingleOrDefault(Expression<Func<T, bool>> expression);

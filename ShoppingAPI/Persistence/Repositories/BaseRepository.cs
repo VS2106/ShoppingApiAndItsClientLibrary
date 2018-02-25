@@ -27,6 +27,11 @@ namespace ShoppingAPI.Persistence.Repositories
             return set.Find(keys);
         }
 
+        public T First(Expression<Func<T, bool>> expression)
+        {
+            return set.First(expression);
+        }
+
         public T FirstOrDefault(Expression<Func<T, bool>> expression)
         {
             return set.FirstOrDefault(expression);
