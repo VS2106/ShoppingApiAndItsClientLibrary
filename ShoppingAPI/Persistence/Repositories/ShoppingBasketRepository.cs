@@ -10,5 +10,13 @@ namespace ShoppingAPI.Persistence.Repositories
             : base(set)
         {
         }
+
+        public ShoppingBasket FindByUserId(string id)
+        {
+            /* ApplicationUser and ShoppingBasket is one to one relationship
+             * ApplicationUser is the pricipal in the relationship.
+             * ShoppingBasket uses ApplicationUser's Id as primary key */
+            return Find(id);
+        }
     }
 }

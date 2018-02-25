@@ -62,7 +62,7 @@ namespace ShoppingAPI.Tests.Controllers
         [Test]
         public void Post_NoShoppingBasketFoundForCurrentUser_ShouldReturnInternalServerError()
         {
-            _mockShoppingBasketRepository.Setup(i => i.Find(_applicationUserId)).Returns((ShoppingBasket)null);
+            _mockShoppingBasketRepository.Setup(i => i.FindByUserId(_applicationUserId)).Returns((ShoppingBasket)null);
             var result = _controller.Post(new OrderItemPostDto { Quantity = 1, ProductId = _product1.Id });
             result.Should().BeOfType<InternalServerErrorResult>();
         }

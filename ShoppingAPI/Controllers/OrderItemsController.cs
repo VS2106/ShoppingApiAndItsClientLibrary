@@ -38,7 +38,7 @@ namespace ShoppingAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var shoppingBasket = _unitOfWork.ShoppingBaskets.Find(User.Identity.GetUserId());
+            var shoppingBasket = _unitOfWork.ShoppingBaskets.FindByUserId(User.Identity.GetUserId());
 
             //Data error. shoppingBasket can never be null, by EF mapping, User and Shopping Basket is one to one relationship
             if (shoppingBasket == null)

@@ -20,7 +20,7 @@ namespace ShoppingAPI.Controllers
 
         public IHttpActionResult Get()
         {
-            var shoppingBasket = _unitOfWork.ShoppingBaskets.Find(User.Identity.GetUserId());
+            var shoppingBasket = _unitOfWork.ShoppingBaskets.FindByUserId(User.Identity.GetUserId());
 
             //Data error. shoppingBasket can never be null, by EF mapping, User and Shopping Basket is one to one relationship
             if (shoppingBasket == null)
@@ -33,7 +33,7 @@ namespace ShoppingAPI.Controllers
         [HttpPut]
         public IHttpActionResult ClearOut()
         {
-            var shoppingBasket = _unitOfWork.ShoppingBaskets.Find(User.Identity.GetUserId());
+            var shoppingBasket = _unitOfWork.ShoppingBaskets.FindByUserId(User.Identity.GetUserId());
 
             if (shoppingBasket == null)
                 return InternalServerError();

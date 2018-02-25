@@ -75,7 +75,7 @@ namespace ShoppingAPI.Tests.Controllers
             _currentUserShoppingBasketThatHasOrderItem1.OrderItems.Add(_orderItem1ThatHasProduct1);
             _mockOrderItemRepository.Setup(i => i.Find(_orderItem1ThatHasProduct1.Id))
                 .Returns(_orderItem1ThatHasProduct1);
-            _mockShoppingBasketRepository.Setup(i => i.Find(_applicationUserId))
+            _mockShoppingBasketRepository.Setup(i => i.FindByUserId(_applicationUserId))
                 .Returns(_currentUserShoppingBasketThatHasOrderItem1);
 
             _orderItem2ThatDoesNotBelongToCurrentUser = new OrderItem

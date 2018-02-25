@@ -25,7 +25,7 @@ namespace ShoppingAPI.Tests.Controllers
         [Test]
         public void Get_NoShoppingBasketFoundForCurrentUser_ShouldReturnInternalServerError()
         {
-            _mockShoppingBasketRepository.Setup(i => i.Find(_applicationUserId)).Returns((ShoppingBasket)null);
+            _mockShoppingBasketRepository.Setup(i => i.FindByUserId(_applicationUserId)).Returns((ShoppingBasket)null);
             var result = _controller.Get();
 
             result.Should().BeOfType<InternalServerErrorResult>();
@@ -48,7 +48,7 @@ namespace ShoppingAPI.Tests.Controllers
         [Test]
         public void ClearOut_NoShoppingBasketFoundForCurrentUser_ShouldReturnInternalServerError()
         {
-            _mockShoppingBasketRepository.Setup(i => i.Find(_applicationUserId)).Returns((ShoppingBasket)null);
+            _mockShoppingBasketRepository.Setup(i => i.FindByUserId(_applicationUserId)).Returns((ShoppingBasket)null);
             var result = _controller.ClearOut();
 
             result.Should().BeOfType<InternalServerErrorResult>();
