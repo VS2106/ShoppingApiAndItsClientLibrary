@@ -23,6 +23,9 @@
         *AddOrderItemToShoppingBasket: If the same product order item already exists in the shopping basket, instead of creating a new item, this function will add the new order's quantity to the existing one.
     </div>
     <div>
+        <input id="btnGetOrderItem" type="button" value="GetOrderItem (please fill in orderItemId)"/>
+    </div>
+    <div>
         <input id="btnChangeQuantityOfOrderItemt" type="button" value="ChangeQuantityOfOrderItem (please fill in orderItemId and quantity)"/>
     </div>
     <div>
@@ -84,6 +87,12 @@
                 ShoppingApiClient.AddOrderItemToShoppingBasket(
                     $("#productId").val(),
                     $("#quantity").val(),
+                    logSuccessResult, logErrorResult);
+            });
+        $("#btnGetOrderItem").click(
+            function() {
+                ShoppingApiClient.GetOrderItem(
+                    $("#orderItemId").val(),
                     logSuccessResult, logErrorResult);
             });
         $("#btnChangeQuantityOfOrderItemt").click(

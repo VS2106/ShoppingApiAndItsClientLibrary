@@ -95,6 +95,19 @@
                 }
             });
         },
+        getOrderItem = function(orderItemId, successCallBack, errorCallBack) {
+            $.ajax({
+                url: shoppingApiEndPointUrl + "/api/OrderItems/" + orderItemId,
+                method: "Get",
+                headers: setHeader(),
+                success: function(response, textStatus, jqXhr) {
+                    ajaxSuccessCallBack(response, textStatus, jqXhr, successCallBack);
+                },
+                error: function(jqXhr, textStatus, errorThrown) {
+                    ajaxErrorCallBack(jqXhr, textStatus, errorThrown, errorCallBack);
+                }
+            });
+        },
         addOrderItemToShoppingBasket = function(productId, quantity, successCallBack, errorCallBack) {
             $.ajax({
                 url: shoppingApiEndPointUrl + "/api/OrderItems",
@@ -150,6 +163,7 @@
         GetProducts: getProducts,
         GetShoppingBasket: getShoppingBasket,
         ClearOutShoppingBasket: clearOutShoppingBasket,
+        GetOrderItem: getOrderItem,
         AddOrderItemToShoppingBasket: addOrderItemToShoppingBasket,
         ChangeQuantityOfOrderItem: changeQuantityOfOrderItem,
         RemoveOrderItemFromShoppingBasket: removeOrderItemFromShoppingBasket
