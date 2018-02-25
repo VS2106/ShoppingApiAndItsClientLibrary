@@ -36,6 +36,11 @@ namespace ShoppingAPI.Persistence
             return _repositories[repoType] as TRepo;
         }
 
+        public void Reload(object entity)
+        {
+            _context.Entry(entity).Reload();
+        }
+
         public int SaveChanges()
         {
             return _context.SaveChanges();

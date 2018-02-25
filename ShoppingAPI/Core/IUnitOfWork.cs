@@ -8,6 +8,8 @@ namespace ShoppingAPI.Core
         IProductRepository Products { get; }
         IOrderItemRepository OrderItems { get; }
         IShoppingBasketRepository ShoppingBaskets { get; }
+        //Reload entity from Db
+        void Reload(object entity);
         int SaveChanges();
     }
 }
