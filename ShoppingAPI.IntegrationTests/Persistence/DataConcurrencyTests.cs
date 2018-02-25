@@ -18,7 +18,6 @@ namespace ShoppingAPI.IntegrationTests.Persistence
 
             unitOfWorkBProductA.StockQuantity = unitOfWorkBProductA.StockQuantity + 2;
             _unitOfWorkB.Invoking(b => b.SaveChanges()).Should().Throw<DbUpdateConcurrencyException>();
-
         }
 
         [Test, Isolated]
@@ -34,7 +33,6 @@ namespace ShoppingAPI.IntegrationTests.Persistence
 
             unitOfWorkBTheOrderItem.Quantity = unitOfWorkBTheOrderItem.Quantity + 2;
             _unitOfWorkB.Invoking(b => b.SaveChanges()).Should().Throw<DbUpdateConcurrencyException>();
-
         }
 
         [Test, Isolated]
@@ -50,7 +48,21 @@ namespace ShoppingAPI.IntegrationTests.Persistence
 
             unitOfWorkBTheOrderItem.Quantity = unitOfWorkBTheOrderItem.Quantity + 2;
             _unitOfWorkB.Invoking(b => b.SaveChanges()).Should().Throw<DbUpdateConcurrencyException>();
+        }
 
+        [Test, Isolated]
+        public void ABLoadedSameOrderItem_ThenADeltedTheOrderItem_ThenBTryToDeleteIt_ShouldThrowDbUpdateConcurrencyException()
+        {
+            var orderItemInDb = CreateAnOrderItemInDb();
+
+            var unitOfWorkATheOrderItem = _unitOfWorkA.OrderItems.First(o => o.Id == orderItemInDb.Id);
+            var unitOfWorkBTheOrderItem = _unitOfWorkB.OrderItems.First(o => o.Id == orderItemInDb.Id);
+
+            _unitOfWorkA.OrderItems.Delete(unitOfWorkATheOrderItem);
+            _unitOfWorkA.SaveChanges();
+
+            _unitOfWorkB.OrderItems.Delete(unitOfWorkBTheOrderItem);
+            _unitOfWorkB.Invoking(b => b.SaveChanges()).Should().Throw<DbUpdateConcurrencyException>();
         }
     }
 }
