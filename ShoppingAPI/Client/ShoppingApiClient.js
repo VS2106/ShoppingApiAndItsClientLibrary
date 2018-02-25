@@ -1,5 +1,5 @@
 ﻿var ShoppingApiClient = function() {
-    var shoppingApiEndPointUrl = "http://localhost:9862", //TODO change to SSL
+    var shoppingApiEndPointUrl = "https://localhost:44394/",
         accessTockenStorageName = "ShoppingApiAccessToken",
         setHeader = function() {
             return {
