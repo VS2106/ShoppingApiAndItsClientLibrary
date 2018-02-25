@@ -6,7 +6,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using ShoppingAPI.Controllers;
 using ShoppingAPI.Core.Dtos;
-using ShoppingAPI.Core.Models;
 using ShoppingAPI.IntegrationTests.Extensions;
 
 namespace ShoppingAPI.IntegrationTests.Controllers
@@ -27,24 +26,17 @@ namespace ShoppingAPI.IntegrationTests.Controllers
         [Test, Isolated]
         public void Get_WhenCalled_ShouldReturnOrderItem()
         {
-            var orderItem = new OrderItem
-            {
-                Product = _productA,
-                Quantity = 1,
-                ShoppingBasket = _currentUserShoppingBasket
-            };
-            _unitOfWork.OrderItems.Add(orderItem);
-            _unitOfWork.SaveChanges();
+            var orderItemInDb = CreateAnOrderItemInDb(1, _productA, _currentUserShoppingBasket);
 
-            var result = _controller.Get(orderItem.Id);
+            var result = _controller.Get(orderItemInDb.Id);
             var resultContent = ((OkNegotiatedContentResult<OrderItemGetDto>)result).Content;
 
             result.Should().BeOfType<OkNegotiatedContentResult<OrderItemGetDto>>();
 
-            _unitOfWork.Reload(orderItem);
-            resultContent.Id.Should().Be(orderItem.Id);
-            resultContent.Quantity.Should().Be(orderItem.Quantity);
-            resultContent.Product.Id.Should().Be(orderItem.ProductId);
+            _unitOfWork.Reload(orderItemInDb);
+            resultContent.Id.Should().Be(orderItemInDb.Id);
+            resultContent.Quantity.Should().Be(orderItemInDb.Quantity);
+            resultContent.Product.Id.Should().Be(orderItemInDb.ProductId);
         }
 
         [Test, Isolated]
@@ -86,15 +78,9 @@ namespace ShoppingAPI.IntegrationTests.Controllers
             _controller.Request =
                 new HttpRequestMessage { RequestUri = new Uri(requestUri) };
 
-            var sameProductOrderItemOriginalQuantity = 5;
-            var sameProductOrderItem = new OrderItem
-            {
-                Product = _productA,
-                ShoppingBasket = _currentUserShoppingBasket,
-                Quantity = sameProductOrderItemOriginalQuantity
-            };
-            _unitOfWork.OrderItems.Add(sameProductOrderItem);
-            _unitOfWork.SaveChanges();
+            var sameProductOrderItemInDbOriginalQuantity = 5;
+            var sameProductOrderItemInDb = CreateAnOrderItemInDb(sameProductOrderItemInDbOriginalQuantity, _productA,
+                _currentUserShoppingBasket);
 
             var orderItemPostDto = new OrderItemPostDto
             {
@@ -107,19 +93,19 @@ namespace ShoppingAPI.IntegrationTests.Controllers
             _unitOfWork.Reload(_currentUserShoppingBasket);
             var newOrderItemInDb =
                 _currentUserShoppingBasket.OrderItems.Single(o => o.ProductId == orderItemPostDto.ProductId);
-            _unitOfWork.Reload(sameProductOrderItem);
+            _unitOfWork.Reload(sameProductOrderItemInDb);
 
-            //newOrderItemInDb and existingOrderItem should be the same item.
-            newOrderItemInDb.Id.Should().Be(sameProductOrderItem.Id);
-            //new order item quantity add to existing order item quantity
-            sameProductOrderItem.Quantity.Should().Be(orderItemPostDto.Quantity + sameProductOrderItemOriginalQuantity);
+            //newOrderItemInDb and sameProductOrderItemInDb should be the same item.
+            newOrderItemInDb.Id.Should().Be(sameProductOrderItemInDb.Id);
+            //orderItemPostDto quantity should add to sameProductOrderItemInDb quantity
+            sameProductOrderItemInDb.Quantity.Should().Be(orderItemPostDto.Quantity + sameProductOrderItemInDbOriginalQuantity);
 
             result.Should().BeOfType<CreatedNegotiatedContentResult<OrderItemGetDto>>();
-            resultContent.Id.Should().Be(sameProductOrderItem.Id);
-            resultContent.Quantity.Should().Be(sameProductOrderItem.Quantity);
-            resultContent.Product.Id.Should().Be(sameProductOrderItem.ProductId);
+            resultContent.Id.Should().Be(sameProductOrderItemInDb.Id);
+            resultContent.Quantity.Should().Be(sameProductOrderItemInDb.Quantity);
+            resultContent.Product.Id.Should().Be(sameProductOrderItemInDb.ProductId);
             ((CreatedNegotiatedContentResult<OrderItemGetDto>)result).Location.Should()
-                .Be($@"{requestUri}/{sameProductOrderItem.Id}");
+                .Be($@"{requestUri}/{sameProductOrderItemInDb.Id}");
 
             _unitOfWork.Reload(_productA);
             _productA.StockQuantity.Should().Be(0);
@@ -128,54 +114,39 @@ namespace ShoppingAPI.IntegrationTests.Controllers
         [Test, Isolated]
         public void Put_WhenCalled_ShouldUpdateQuantityOfOrderItemUpdate_UpdateStockQuantityOfProduct_ReturnOk()
         {
-            var orderItemOriginalQuantity = 5;
+            var orderItemInDbOriginalQuantity = 5;
             var productAOriginalStockQuantity = _productA.StockQuantity;
-            var orderItem = new OrderItem
-            {
-                Product = _productA,
-                ShoppingBasket = _currentUserShoppingBasket,
-                Quantity = orderItemOriginalQuantity
-            };
-            _unitOfWork.OrderItems.Add(orderItem);
-            _unitOfWork.SaveChanges();
+            var orderItemInDb = CreateAnOrderItemInDb(orderItemInDbOriginalQuantity, _productA, _currentUserShoppingBasket);
 
             var orderItemPutDto = new OrderItemPutDto
             {
                 Quantity = _productA.StockQuantity
             };
-            var result = _controller.Put(orderItem.Id, orderItemPutDto);
+            var result = _controller.Put(orderItemInDb.Id, orderItemPutDto);
             result.Should().BeOfType<OkResult>();
 
-            _unitOfWork.Reload(orderItem);
-            orderItem.Quantity.Should().Be(orderItemPutDto.Quantity);
+            _unitOfWork.Reload(orderItemInDb);
+            orderItemInDb.Quantity.Should().Be(orderItemPutDto.Quantity);
 
             _unitOfWork.Reload(_productA);
             _productA.StockQuantity.Should()
-                .Be(productAOriginalStockQuantity + orderItemOriginalQuantity - orderItemPutDto.Quantity);
+                .Be(productAOriginalStockQuantity + orderItemInDbOriginalQuantity - orderItemPutDto.Quantity);
         }
 
         [Test, Isolated]
         public void Deleted_WhenCalled_ShouldDeleteOrderItem_UpdateStockQuantityOfProduct_ReturnOk()
         {
-            var orderItemOriginalQuantity = 5;
+            var orderItemInDbOriginalQuantity = 5;
             var productAOriginalStockQuantity = _productA.StockQuantity;
-            var orderItem = new OrderItem
-            {
-                Product = _productA,
-                ShoppingBasket = _currentUserShoppingBasket,
-                Quantity = orderItemOriginalQuantity
-            };
-            _unitOfWork.OrderItems.Add(orderItem);
-            _unitOfWork.SaveChanges();
+            var orderItemInDb = CreateAnOrderItemInDb(orderItemInDbOriginalQuantity, _productA, _currentUserShoppingBasket);
 
-
-            var result = _controller.Delete(orderItem.Id);
+            var result = _controller.Delete(orderItemInDb.Id);
             result.Should().BeOfType<OkResult>();
 
-            _unitOfWork.OrderItems.Find(orderItem.Id).Should().Be(null);
+            _unitOfWork.OrderItems.Find(orderItemInDb.Id).Should().Be(null);
 
             _unitOfWork.Reload(_productA);
-            _productA.StockQuantity.Should().Be(orderItemOriginalQuantity + productAOriginalStockQuantity);
+            _productA.StockQuantity.Should().Be(orderItemInDbOriginalQuantity + productAOriginalStockQuantity);
         }
 
     }

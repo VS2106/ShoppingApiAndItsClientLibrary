@@ -23,5 +23,18 @@ namespace ShoppingAPI.IntegrationTests.Controllers
         {
             _unitOfWork.Dispose();
         }
+
+        protected OrderItem CreateAnOrderItemInDb(int quantity, Product product, ShoppingBasket shoppingBasket)
+        {
+            var orderItem = new OrderItem()
+            {
+                Product = product,
+                Quantity = quantity,
+                ShoppingBasket = shoppingBasket
+            };
+            _unitOfWork.OrderItems.Add(orderItem);
+            _unitOfWork.SaveChanges();
+            return orderItem;
+        }
     }
 }
