@@ -100,6 +100,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controllers\ControllerIntegrationTestsBase.cs" />
+    <Compile Include="Controllers\OrderItemsControllerIntegrationTests.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="GlobalSetUp.cs" />
     <Compile Include="Isolated.cs" />
@@ -116,9 +118,7 @@
       <Name>ShoppingAPI</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
