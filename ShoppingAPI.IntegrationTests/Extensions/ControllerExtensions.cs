@@ -17,5 +17,10 @@ namespace ShoppingAPI.IntegrationTests.Extensions
 
             controller.User = new GenericPrincipal(identity, null);
         }
+
+        public static void MockCurrentUser(this ApiController controller)
+        {
+            controller.MockCurrentUser(GlobalSetUp._currentUserId, GlobalSetUp._currentUserName);
+        }
     }
 }
