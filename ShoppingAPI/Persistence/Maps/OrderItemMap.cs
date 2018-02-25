@@ -22,8 +22,8 @@ namespace ShoppingAPI.Persistence.Maps
             Property(t => t.ShoppingBasketId)
                 .HasColumnName("strApplicationUserId")
                 .IsRequired();
-            /*ShoppingBasketId and ProductId of OrderItem is multi column unique index
-             *For a shopping basket, there won't be multi OrderItems with the same product. */
+            /*Apply an unique index on multiple columns ProductId, ShoppingBasketId
+             *In one shopping basket, there won't be multiple OrderItems with the same product. */
             HasIndex(t => new { t.ProductId, t.ShoppingBasketId })
                 .IsUnique();
         }

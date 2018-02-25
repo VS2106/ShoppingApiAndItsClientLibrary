@@ -84,9 +84,9 @@ namespace ShoppingAPI.Controllers
                 return InternalServerError(ex);
             }
             catch (DbUpdateException ex)
-            // Same product order item have been added to the shopping basket since entities were loaded. (OrderItemMap.cs applied a multi column unique index)
+            // Same product order item have been added to the shopping basket since entities were loaded. (OrderItemMap.cs applied a unique index on multiple columns)
             {
-                //TODO later: handle multi column unique index exception
+                //TODO later: handle order item unique index exception
                 return InternalServerError(ex);
             }
         }
