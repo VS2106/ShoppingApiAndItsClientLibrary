@@ -1,6 +1,9 @@
 Please open the project by Visual Studio 2015 and newer. </br>
 Before running the project, please restore Nuget packages. </br></br>
 
+When you run the API project in VS at the first time, 
+please choose to trust the self-signed certificated that IIS Express has generated. </br></br>
+
 ShoppingApi client library is located at ShoppingAPI/Client/ShoppingApiClient.js </br>
 A demo demonstrating how to use this library is located at ShoppingAPI/Client/Demo.html </br></br>
 
@@ -20,6 +23,3 @@ ShoppingApi has 3 business domain models.</br>
 by the domian model mapping, ShoppingApi is aware of data concurrency issue and unique index issue (see ShoppingAPI.IntegrationTests/Persistence/)</br></br>
 
 ShoppingApi applies repository pattern, unit of work pattern, dependency injection pattern ...</br></br>
-
-If you want to enable SSL for the web api, check out branch masterEnableSSL. </br>
-To continue, please choose to trust the self-signed certificated that IIS Express has generated. 
