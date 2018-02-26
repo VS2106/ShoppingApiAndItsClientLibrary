@@ -15,7 +15,7 @@ namespace ShoppingAPI.Tests.Controllers
         private ShoppingBasketController _controller;
 
         [SetUp]
-        public void SetUp()
+        public new void SetUp()
         {
             base.SetUp();
             _controller = new ShoppingBasketController(_mockUnitOfWork.Object);
