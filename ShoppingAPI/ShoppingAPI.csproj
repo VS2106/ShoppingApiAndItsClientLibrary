@@ -305,6 +305,11 @@
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Resources\OrderItemsControllerResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrderItemsControllerResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -366,6 +371,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201802162006577_SeedDBWithFakeTestData.resx">
       <DependentUpon>201802162006577_SeedDBWithFakeTestData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OrderItemsControllerResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>OrderItemsControllerResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

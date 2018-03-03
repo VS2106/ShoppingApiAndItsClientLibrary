@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using ShoppingAPI.Core;
 using ShoppingAPI.Core.Dtos;
 using ShoppingAPI.Core.Models;
+using ShoppingAPI.Resources;
 
 namespace ShoppingAPI.Controllers
 {
@@ -46,13 +47,14 @@ namespace ShoppingAPI.Controllers
 
             var product = _unitOfWork.Products.Find(orderItemDtoPostDto.ProductId);
             if (product == null)
-                return BadRequest($"The product, Id {orderItemDtoPostDto.ProductId} does not exist.");
+                return BadRequest(
+                    string.Format(OrderItemsControllerResource.ProductWithIdXNotExist, orderItemDtoPostDto.ProductId));
 
             var stockQuantityOfProductAfterOrdering = product.StockQuantity - orderItemDtoPostDto.Quantity;
             if (stockQuantityOfProductAfterOrdering < 0)
-                return
-                    BadRequest(
-                        $"You want to order {orderItemDtoPostDto.Quantity}, but the stock quantity of this product is {product.StockQuantity}");
+                return BadRequest(
+                    string.Format(OrderItemsControllerResource.OrderQuantityXButStockQuantityY,
+                        orderItemDtoPostDto.Quantity, product.StockQuantity));
             product.StockQuantity = stockQuantityOfProductAfterOrdering;
 
             var orderItem = shoppingBasket.OrderItems.FirstOrDefault(o => o.ProductId == orderItemDtoPostDto.ProductId);
@@ -110,9 +112,9 @@ namespace ShoppingAPI.Controllers
             var stockQuantityOfProductAfterOrdering = stockQuantity - orderItemDtoPutDto.Quantity;
             if (stockQuantityOfProductAfterOrdering < 0)
             {
-                return
-                    BadRequest(
-                        $"You want to change the quantity of this order to {orderItemDtoPutDto.Quantity}, but the stock quantity of this product is {stockQuantity}");
+                return BadRequest(
+                    string.Format(OrderItemsControllerResource.ChangeOrderQuantityToXButStockQuantityY,
+                        orderItemDtoPutDto.Quantity, stockQuantity));
             }
             product.StockQuantity = stockQuantityOfProductAfterOrdering;
             orderItem.Quantity = orderItemDtoPutDto.Quantity;
