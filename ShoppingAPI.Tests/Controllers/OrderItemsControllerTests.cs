@@ -6,6 +6,7 @@ using NUnit.Framework;
 using ShoppingAPI.Controllers;
 using ShoppingAPI.Core.Dtos;
 using ShoppingAPI.Core.Models;
+using ShoppingAPI.Resources;
 using ShoppingAPI.Tests.Extensions;
 
 namespace ShoppingAPI.Tests.Controllers
@@ -76,7 +77,8 @@ namespace ShoppingAPI.Tests.Controllers
             var result = _controller.Post(new OrderItemPostDto { Quantity = 1, ProductId = productId });
 
             result.Should().BeOfType<BadRequestErrorMessageResult>();
-            ((BadRequestErrorMessageResult)result).Message.Should().Contain(productId.ToString());
+            ((BadRequestErrorMessageResult)result).Message.Should().Be(
+                string.Format(OrderItemsControllerResource.ProductWithIdXNotExist, productId));
         }
 
         [Test]
@@ -86,11 +88,10 @@ namespace ShoppingAPI.Tests.Controllers
             var result =
                 _controller.Post(new OrderItemPostDto { Quantity = quantityOfOrderItem, ProductId = _product1.Id });
 
-            var resultMessage = ((BadRequestErrorMessageResult)result).Message;
-
             result.Should().BeOfType<BadRequestErrorMessageResult>();
-            resultMessage.Should().Contain(_product1.StockQuantity.ToString());
-            resultMessage.Should().Contain(quantityOfOrderItem.ToString());
+            ((BadRequestErrorMessageResult)result).Message.Should()
+                .Be(string.Format(OrderItemsControllerResource.OrderQuantityXButStockQuantityY, quantityOfOrderItem,
+                    _product1.StockQuantity));
         }
 
 
@@ -175,12 +176,11 @@ namespace ShoppingAPI.Tests.Controllers
                     _orderItem1ThatHasProduct1.Id,
                     new OrderItemPutDto { Quantity = quantityOfOrderItem });
 
-            var resultMessage = ((BadRequestErrorMessageResult)result).Message;
-
             result.Should().BeOfType<BadRequestErrorMessageResult>();
-            resultMessage.Should()
-                .Contain((_product1.StockQuantity + originalQuantityOfOrderItem1ThatHasProduct1).ToString());
-            resultMessage.Should().Contain(quantityOfOrderItem.ToString());
+
+            ((BadRequestErrorMessageResult)result).Message.Should()
+                .Be(string.Format(OrderItemsControllerResource.ChangeOrderQuantityToXButStockQuantityY,
+                    quantityOfOrderItem, _product1.StockQuantity + originalQuantityOfOrderItem1ThatHasProduct1));
         }
 
         [Test]

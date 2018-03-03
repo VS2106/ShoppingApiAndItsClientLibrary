@@ -373,7 +373,7 @@
       <DependentUpon>201802162006577_SeedDBWithFakeTestData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\OrderItemsControllerResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OrderItemsControllerResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

@@ -22,7 +22,7 @@ namespace ShoppingAPI.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class OrderItemsControllerResource {
+    public class OrderItemsControllerResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ShoppingAPI.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ShoppingAPI.Resources.OrderItemsControllerResource", typeof(OrderItemsControllerResource).Assembly);
@@ -51,7 +51,7 @@ namespace ShoppingAPI.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace ShoppingAPI.Resources {
         /// <summary>
         ///   Looks up a localized string similar to You want to change the quantity of this order to {0}, but the stock quantity of this product is {1}.
         /// </summary>
-        internal static string ChangeOrderQuantityToXButStockQuantityY {
+        public static string ChangeOrderQuantityToXButStockQuantityY {
             get {
                 return ResourceManager.GetString("ChangeOrderQuantityToXButStockQuantityY", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace ShoppingAPI.Resources {
         /// <summary>
         ///   Looks up a localized string similar to You want to order {0}, but the stock quantity of this product is {1}.
         /// </summary>
-        internal static string OrderQuantityXButStockQuantityY {
+        public static string OrderQuantityXButStockQuantityY {
             get {
                 return ResourceManager.GetString("OrderQuantityXButStockQuantityY", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace ShoppingAPI.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The product, Id {0}, does not exist..
         /// </summary>
-        internal static string ProductWithIdXNotExist {
+        public static string ProductWithIdXNotExist {
             get {
                 return ResourceManager.GetString("ProductWithIdXNotExist", resourceCulture);
             }
