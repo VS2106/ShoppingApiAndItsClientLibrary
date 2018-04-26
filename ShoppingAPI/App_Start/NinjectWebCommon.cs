@@ -48,14 +48,6 @@ namespace ShoppingAPI.App_Start
 
             RegisterServices(kernel);
 
-            kernel.Bind(x =>
-            {
-                x.FromThisAssembly()
-                    .SelectAllClasses()
-                    .BindDefaultInterface()
-                    .Configure(y => y.InRequestScope());
-            });
-
             return kernel;
         }
 
@@ -65,7 +57,13 @@ namespace ShoppingAPI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            //kernel.Load(Assembly.GetExecutingAssembly());
+            kernel.Bind(x =>
+            {
+                x.FromThisAssembly()
+                    .SelectAllClasses()
+                    .BindDefaultInterface()
+                    .Configure(y => y.InRequestScope());
+            });
         }
     }
 }
