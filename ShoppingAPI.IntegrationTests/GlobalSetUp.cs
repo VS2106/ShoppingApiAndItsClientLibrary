@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Data.Entity.Migrations;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using ShoppingAPI.App_Start;
 using ShoppingAPI.Core.Models;
-using ShoppingAPI.Migrations;
 using ShoppingAPI.Persistence;
 
 namespace ShoppingAPI.IntegrationTests
@@ -53,24 +52,20 @@ namespace ShoppingAPI.IntegrationTests
         {
             AppDomain.CurrentDomain.SetData(
                 "DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ""));
-            new DbMigrator(new Configuration()).Update();
+            Database.SetInitializer(new DropCreateDatabaseAlways<ShoppingApiDbContext>());
         }
 
         public void SeedUsers()
         {
-            if (!_context.Users.Any(u => u.UserName == "UserA"))
-                _context.Users.Add(new ApplicationUser { UserName = "UserA", Email = "-", PasswordHash = "-" });
-            if (!_context.Users.Any(u => u.UserName == "UserB"))
-                _context.Users.Add(new ApplicationUser { UserName = "UserB", Email = "-", PasswordHash = "-" });
+            _context.Users.Add(new ApplicationUser { UserName = "UserA", Email = "-", PasswordHash = "-" });
+            _context.Users.Add(new ApplicationUser { UserName = "UserB", Email = "-", PasswordHash = "-" });
             _context.SaveChanges();
-
         }
+
         private void SeedProducts()
         {
-            if (!_context.Products.Any(u => u.Name == "ProductA"))
-                _context.Products.Add(new Product { Name = "ProductA", StockQuantity = 15 });
-            if (!_context.Products.Any(u => u.Name == "ProductB"))
-                _context.Products.Add(new Product { Name = "ProductB", StockQuantity = 20 });
+            _context.Products.Add(new Product { Name = "ProductA", StockQuantity = 15 });
+            _context.Products.Add(new Product { Name = "ProductB", StockQuantity = 20 });
             _context.SaveChanges();
         }
 
