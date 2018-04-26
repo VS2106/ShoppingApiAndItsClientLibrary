@@ -107,7 +107,7 @@
     <Compile Include="Controllers\ShoppingBasketControllerIntegrationTests.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="GlobalSetUp.cs" />
-    <Compile Include="Isolated.cs" />
+    <Compile Include="IsolatedAttribute.cs" />
     <Compile Include="Persistence\DataConcurrencyTests.cs" />
     <Compile Include="Persistence\PersistenceTestBase.cs" />
     <Compile Include="Persistence\UniqueIndexOnMultipleColumnsTests.cs" />

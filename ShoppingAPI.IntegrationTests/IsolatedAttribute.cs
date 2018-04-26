@@ -6,7 +6,7 @@ using NUnit.Framework.Interfaces;
 namespace ShoppingAPI.IntegrationTests
 {
     //Attribute that roll back db after each test
-    public class Isolated : Attribute, ITestAction
+    public class IsolatedAttribute : Attribute, ITestAction
     {
         private TransactionScope _transactionScope;
         public void BeforeTest(ITest test)
